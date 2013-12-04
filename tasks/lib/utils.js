@@ -52,6 +52,6 @@ exports.regexReplace = function(src, tagConfig) {
     regExp = tagConfig.regex; //regex => RegExp object
   }
   updatedSrc = String(src).replace(regExp, tagConfig.replacement); //note: substr can be a function
-  grunt.log.writeln(tagConfig.name + ' --> ' + tagConfig.replacement);
+  //grunt.log.writeln(tagConfig.name + ' --> ' + tagConfig.replacement);
   return updatedSrc;
 };
