@@ -35,11 +35,27 @@ module.exports = function(grunt) {
       all: [
         "Gruntfile.js",
         "tasks/lib/*.js",
-        "tasks/*.js",
+        "tasks/*.js"
       ],
       options: {
-        jshintrc: ".jshintrc",
+        jshintrc: ".jshintrc"
       }
+    },
+    antdeploy: {
+        options: {
+            // Task-specific options.
+        },
+        dev1: {
+            options: {
+                user:  'federico@sfadm.test',
+                pass:  'force36206a',
+                token: 'aHJVm2eWU4Ibhl8ndwkkd2wtN'
+            },
+            pkg: {
+                staticresource: ['*'],
+                apexpage: ['*']
+            }
+        }
     }
   });
  
@@ -52,5 +68,7 @@ module.exports = function(grunt) {
   grunt.loadTasks("tasks");
   // By default, lint and run all tests.
   grunt.registerTask("default", ["watch"]);
+  grunt.registerTask("deploy", ["antdeploy"]);
+  grunt.registerTask("build", ["build"]);
   
 };
