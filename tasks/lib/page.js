@@ -3,6 +3,7 @@
 var grunt = require("grunt");
 var utils = require("./utils.js");
 var configuration = require("./configuration.js");
+var constants = require("./constants.js");
 
 /**
  * module that buids visualforce pages based on html files
@@ -15,8 +16,9 @@ exports.buildPages = function() {
 
   var defaultConfiguration = configuration.getConfiguration();
   var replacementConfiguration = configuration.getReplacementConfiguration();
-  var inputPath = defaultConfiguration["path"].inputPath;
-  var outputPath = defaultConfiguration["path"].outputPath + defaultConfiguration["page"].outputPath;
+  var inputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].inputPath;
+  var outputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].outputPath + 
+                   defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;
   var tagsToReplace = replacementConfiguration["tags"];
 
   grunt.file.recurse("./" + inputPath + "/src/html/", function (abspath, rootdir, subdir, filename) {
@@ -27,7 +29,7 @@ exports.buildPages = function() {
     
     if(extension === HTML_EXT){
       //creates a -meta.xml file for filename
-      utils.buildXMLMeta(PAGE_EXT, filename.substring(0, delimiterPos));
+      utils.buildXMLMeta(constants.XML_META_PAGE, filename.substring(0, delimiterPos));
       //creates a .page file for filename and replaces html tags
       var htmlCode = grunt.file.read(abspath);
       for (var tag in tagsToReplace) {
@@ -36,7 +38,6 @@ exports.buildPages = function() {
         grunt.file.write(dest, htmlCode);
       }
     }
-
   });
 
 };

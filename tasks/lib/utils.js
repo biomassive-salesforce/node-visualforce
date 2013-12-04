@@ -2,6 +2,7 @@
 
 var grunt = require('grunt');
 var configuration = require('./configuration.js');
+var constants = require("./constants.js");
 
 /**
  * function that builds the meta-data files
@@ -12,8 +13,10 @@ var configuration = require('./configuration.js');
 exports.buildXMLMeta = function(type, fileName) {
 	var defaultConfiguration = configuration.getConfiguration();
 	var metaType = defaultConfiguration[type].metaType;
-	var outputPath = defaultConfiguration['path'].outputPath + defaultConfiguration[type].outputPath;
+	var outputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].outputPath + defaultConfiguration[type].outputPath;
   var options = defaultConfiguration[type].options;
+
+  var LABEL = "label";
   
   var packageXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -22,7 +25,7 @@ exports.buildXMLMeta = function(type, fileName) {
 
   if(options) {
     Object.keys(options).forEach(function(key) {
-      packageXml.push('    <' + key + '>' + (key === 'label'?fileName:options[key]) + '</' + key + '>');
+      packageXml.push('    <' + key + '>' + (key === LABEL?fileName:options[key]) + '</' + key + '>');
     });
   }
   var dest = grunt.template.process(outputPath + fileName) + '-meta.xml';

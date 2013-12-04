@@ -1,7 +1,7 @@
 'use strict';
 
 var page = require('./lib/page.js');
-//var staticResources = require('./lib/staticResources.js'); 
+var staticResources = require('./lib/staticResources.js'); 
 
 /**
  * module that builds the package to be exported
@@ -10,7 +10,7 @@ var page = require('./lib/page.js');
  */
 module.exports = function(grunt) {
   grunt.registerTask('build', function(){
-    //staticResources.buildStaticResources();
+    staticResources.buildStaticResources();
     page.buildPages();
   });
 };

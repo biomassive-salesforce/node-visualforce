@@ -2,6 +2,7 @@
 
 var utils = require("./utils.js");
 var configuration = require("./configuration.js");
+var constants = require("./constants.js");
 
 /**
  * library that helps to build package.
@@ -11,8 +12,8 @@ exports.buildStaticResources = function() {
 	var defaultConfiguration = configuration.getConfiguration();
 
 	//Get Static Resource Name from settings.json
-	var staticResourceName = defaultConfiguration.fileNames.staticResourceName;
+	var staticResourceName = defaultConfiguration[constants.FILENAME_CONFIGURATION_KEY].staticResourceName;
 
 	//Write Static Resource -meta.xml
-	utils.buildXMLMeta("package", staticResourceName);
+	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName);
 };
