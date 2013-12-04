@@ -44,7 +44,7 @@ module.exports = function(grunt) {
     nodeunit: {
       all: ['test/**/*_test.js']
     },
-    antdeploy: {
+    deploy: {
         options: {
             // Task-specific options.
         },
@@ -72,7 +72,5 @@ module.exports = function(grunt) {
   grunt.loadTasks("tasks");
   // By default, lint and run all tests.
   grunt.registerTask("default", ["watch"]);
-  grunt.registerTask("deploy", ["antdeploy"]);
-  grunt.registerTask("build", ["build"]);
   
 };

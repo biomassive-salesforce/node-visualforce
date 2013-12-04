@@ -129,7 +129,7 @@ module.exports = function(grunt){
 
 
     /* Deploy Task */
-    grunt.registerMultiTask('antdeploy', 'Run ANT deploy to Salesforce', function() {
+    grunt.registerMultiTask('deploy', 'Run ANT deploy to Salesforce', function() {
 
         makeLocalTmp();
 

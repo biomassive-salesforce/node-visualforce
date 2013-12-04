@@ -7,17 +7,18 @@ var constants = require("./constants.js");
 
 /**
  * module that buids visualforce pages based on html files
+ * @param {object} options configuration object
  * @return {void}
  */
-exports.buildPages = function() {
+exports.buildPages = function(options) {
   //extensions
   var HTML_EXT = "html";
   var PAGE_EXT = "page";
 
   var defaultConfiguration = configuration.getConfiguration();
   var replacementConfiguration = configuration.getReplacementConfiguration();
-  var inputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].inputPath;
-  var outputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].outputPath + 
+  var inputPath = options.inputPath;
+  var outputPath = options.outputPath + 
                    defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;
   var tagsToReplace = replacementConfiguration["tags"];
 
@@ -29,7 +30,7 @@ exports.buildPages = function() {
     
     if(extension === HTML_EXT){
       //creates a -meta.xml file for filename
-      utils.buildXMLMeta(constants.XML_META_PAGE, filename.substring(0, delimiterPos));
+      utils.buildXMLMeta(constants.XML_META_PAGE, filename.substring(0, delimiterPos), options.outputPath);
       //creates a .page file for filename and replaces html tags
       var htmlCode = grunt.file.read(abspath);
       for (var tag in tagsToReplace) {

@@ -1,7 +1,8 @@
 'use strict';
 
 var page = require('./lib/page.js');
-var staticResources = require('./lib/staticResources.js'); 
+var staticResources = require('./lib/staticResources.js');
+var configuration = require('./lib/configuration').getConfiguration();
 
 /**
  * module that builds the package to be exported
@@ -10,7 +11,16 @@ var staticResources = require('./lib/staticResources.js');
  */
 module.exports = function(grunt) {
   grunt.registerTask('build', function(){
-    staticResources.buildStaticResources();
-    page.buildPages();
+
+  	//set default configurations
+  	var options = this.options({
+  		inputPath: configuration.path.inputPath,
+  		outputPath: configuration.path.outputPath,
+  		staticResourceFolder: configuration.path.staticResourceFolder,
+  		staticResourceName: configuration.fileNames.staticResourceName
+  	});
+  	
+    staticResources.buildStaticResources(options);
+    page.buildPages(options);
   });
 };

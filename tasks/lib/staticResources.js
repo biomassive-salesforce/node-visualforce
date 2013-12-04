@@ -1,19 +1,19 @@
 "use strict";
 
 var utils = require("./utils.js");
-var configuration = require("./configuration.js");
 var constants = require("./constants.js");
 
 /**
  * library that helps to build package.
+ * @param {object} options configuration object
  * @return {void}
  */
-exports.buildStaticResources = function() {
-	var defaultConfiguration = configuration.getConfiguration();
-
-	//Get Static Resource Name from settings.json
-	var staticResourceName = defaultConfiguration[constants.FILENAME_CONFIGURATION_KEY].staticResourceName;
+exports.buildStaticResources = function(options) {
+	
+	//Get Static Resource Name from configuration object
+	var staticResourceName = options.staticResourceName;
+	var outputPath = options.outputPath;
 
 	//Write Static Resource -meta.xml
-	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName);
+	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName, outputPath);
 };

@@ -8,12 +8,13 @@ var constants = require("./constants.js");
  * function that builds the meta-data files
  * @param  {string} type     config type
  * @param  {string} fileName string with filename
+ * @param  {string} outputDir output folder
  * @return {void}
  */
-exports.buildXMLMeta = function(type, fileName) {
+exports.buildXMLMeta = function(type, fileName, outputDir) {
 	var defaultConfiguration = configuration.getConfiguration();
 	var metaType = defaultConfiguration[type].metaType;
-	var outputPath = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].outputPath + defaultConfiguration[type].outputPath;
+	var outputPath = outputDir + defaultConfiguration[type].outputPath;
   var options = defaultConfiguration[type].options;
 
   var LABEL = "label";
