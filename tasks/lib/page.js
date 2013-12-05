@@ -31,7 +31,7 @@ exports.buildPages = function(options) {
     
     if(extension === HTML_EXT){
       //creates a -meta.xml file for filename
-      utils.buildXMLMeta(constants.XML_META_PAGE, filename.substring(0, delimiterPos), options.outputPath);
+      utils.buildXMLMeta(constants.XML_META_PAGE, filename.substring(0, delimiterPos), constants.PAGE_EXTENSION, options.outputPath);
       //creates a .page file for filename and replaces html tags
       var htmlCode = grunt.file.read(abspath);
       for (var tag in tagsToReplace) {

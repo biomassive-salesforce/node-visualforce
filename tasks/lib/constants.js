@@ -14,4 +14,5 @@ exports.XML_META_STATIC_RESOURCE = 'package';
 //Static Resource extension
 exports.STATIC_RESOURCE_EXTENSION = 'resource';
 
-
+//Pages Extension
+exports.PAGE_EXTENSION = 'page';

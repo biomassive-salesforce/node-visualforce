@@ -25,5 +25,5 @@ exports.buildStaticResources = function(options, done) {
 					constants.STATIC_RESOURCE_EXTENSION, done);
 
 	//Write Static Resource -meta.xml
-	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName, outputPath);
+	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName, constants.STATIC_RESOURCE_EXTENSION, outputPath);
 };

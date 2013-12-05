@@ -11,7 +11,7 @@ var constants = require("./constants.js");
  * @param  {string} outputDir output folder
  * @return {void}
  */
-exports.buildXMLMeta = function(type, fileName, outputDir) {
+exports.buildXMLMeta = function(type, fileName, extension, outputDir) {
 	var defaultConfiguration = configuration.getConfiguration();
 	var metaType = defaultConfiguration[type].metaType;
 	var outputPath = outputDir + defaultConfiguration[type].outputPath;
@@ -29,7 +29,7 @@ exports.buildXMLMeta = function(type, fileName, outputDir) {
       packageXml.push('    <' + key + '>' + (key === LABEL?fileName:options[key]) + '</' + key + '>');
     });
   }
-  var dest = grunt.template.process(outputPath + fileName) + '-meta.xml';
+  var dest = grunt.template.process(outputPath + fileName + '.' + extension) + '-meta.xml';
   packageXml.push('</'+ metaType +'>');
   grunt.file.write(dest, packageXml.join('\n'));
 };
