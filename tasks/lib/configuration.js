@@ -63,30 +63,177 @@ exports.getConfiguration = function(){
  */
 exports.getReplacementConfiguration = function(){
 	var defaultConfiguration = this.getConfiguration();
+	var apexPageFlagsConfiguration = this.getPageFlagsConfiguration();
 	var staticResourceName = defaultConfiguration["fileNames"].staticResourceName;
+	// generates all the flags for the apex:page tag
+	var $flags = "";
+	Object.keys(apexPageFlagsConfiguration).forEach(function(item) {
+		if (apexPageFlagsConfiguration[item].active === true) {
+			$flags += " " + item + "=\"" + apexPageFlagsConfiguration[item].value + "\"";
+		}
+    });
 	var replacementSettings = {
 	    "tags": {
+	    	"doctype": {
+				"name": "<!DOCTYPE>",
+				"regex": /<!DOCTYPE(.*?)>/ig,
+				"replacement": ""
+			},
 			"htmlOpen": {
 				"name": "<html>",
-				"regex": /<html(.*?)>/,
-				"replacement": "<apex:page>"
+				"regex": /<html(.*?)>/ig,
+				"replacement": "<apex:page" + $flags + ">"
 			},
 			"htmlClose": {
 				"name": "</html>",
-				"regex": /<\/html>/,
+				"regex": /<\/html>/ig,
 				"replacement": "</apex:page>"
 			},
 			"link": {
 				"name": "<link>",
-				"regex": /<link(.*?)href="(.*?)"(.*?)>/,
+				"regex": /<link(.*?)href="(.*?)"(.*?)>/ig,
 				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
 			},
 			"script": {
 				"name": "<script>",
-				"regex": /<script(.*?)src="(.*?)"(.*?)><\/script>/,
+				"regex": /<script(.*?)src="(.*?)"(.*?)><\/script>/ig,
 				"replacement": "<apex:includeScript value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
 			}
 		}
 	};
     return replacementSettings;
+};
+
+/**
+ * Apex Page flags configuration settings
+ * @return {object} apex page flags configuration object
+ */
+exports.getPageFlagsConfiguration = function(){
+	var apexPageFlags = {
+		"action": {
+			"value": "{!doAction}",
+			"active": true
+		},
+		"apiVersion": {
+			"value": "29.0",
+			"active": true
+		},
+		"applyBodyTag": {
+			"value": false,
+			"active": false
+		},
+		"applyHtmlTag": {
+			"value": false,
+			"active": false
+		},
+		"cache": {
+			"value": false,
+			"active": false
+		},
+		"contentType": {
+			"value": "text/html",
+			"active": false
+		},
+		"controller": {
+			"value": "",
+			"active": false
+		},
+		"deferLastCommandUntilReady": {
+			"value": false,
+			"active": false
+		},
+		"docType": {
+			"value": "html-5.0",
+			"active": false
+		},
+		"expires": {
+			"value": "600",
+			"active": false
+		},
+		"extensions": {
+			"value": "",
+			"active": false
+		},
+		"id": {
+			"value": "",
+			"active": false
+		},
+		"label": {
+			"value": "",
+			"active": false
+		},
+		"language": {
+			"value": "",
+			"active": false
+		},
+		"manifest": {
+			"value": "",
+			"active": false
+		},
+		"name": {
+			"value": "",
+			"active": false
+		},
+		"pageStyle": {
+			"value": "",
+			"active": false
+		},
+		"readOnly": {
+			"value": false,
+			"active": false
+		},
+		"recordSetName": {
+			"value": "",
+			"active": false
+		},
+		"recordSetVar": {
+			"value": "",
+			"active": false
+		},
+		"renderAs": {
+			"value": "",
+			"active": false
+		},
+		"rendered": {
+			"value": false,
+			"active": false
+		},
+		"setup": {
+			"value": false,
+			"active": false
+		},
+		"showChat": {
+			"value": false,
+			"active": false
+		},
+		"showHeader": {
+			"value": false,
+			"active": true
+		},
+		"sidebar": {
+			"value": false,
+			"active": true
+		},
+		"standardController": {
+			"value": "",
+			"active": false
+		},
+		"standardStylesheets": {
+			"value": "",
+			"active": false
+		},
+		"tabStyle": {
+			"value": "",
+			"active": false
+		},
+		"title": {
+			"value": "",
+			"active": false
+		},
+		"wizard": {
+			"value": false,
+			"active": false
+		}
+	}
+    return apexPageFlags;
 };
