@@ -112,11 +112,11 @@ exports.getPageFlagsConfiguration = function(){
 	var apexPageFlags = {
 		"action": {
 			"value": "{!doAction}",
-			"active": true
+			"active": false
 		},
 		"apiVersion": {
 			"value": "29.0",
-			"active": true
+			"active": false
 		},
 		"applyBodyTag": {
 			"value": false,
@@ -212,15 +212,15 @@ exports.getPageFlagsConfiguration = function(){
 		},
 		"sidebar": {
 			"value": false,
-			"active": true
+			"active": false
 		},
 		"standardController": {
 			"value": "",
 			"active": false
 		},
 		"standardStylesheets": {
-			"value": "",
-			"active": false
+			"value": false,
+			"active": true
 		},
 		"tabStyle": {
 			"value": "",
