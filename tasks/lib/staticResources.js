@@ -7,6 +7,7 @@ var constants = require("./constants.js");
 /**
  * library that helps to build package.
  * @param {object} options configuration object
+ * @param {function} done  async flag
  * @return {void}
  */
 exports.buildStaticResources = function(options, done) {

@@ -2,11 +2,17 @@
 
 var path     = require('path');
 var metadata = require('./lib/metadata.json');
+var configuration = require('./lib/configuration').getConfiguration();
 var localTmp = path.resolve(__dirname, '../tmp');
 var localAnt = path.resolve(__dirname, '../ant');
 var localLib = path.resolve(__dirname, '../deps');
 
-// TODO: send to util module.
+
+/**
+ * function that seeks for the metadata
+ * @param  {string} key key definition
+ * @return {void}     
+ */
 function lookupMetadata(key) {
     key = key.toLowerCase();
     var typeName;
@@ -40,9 +46,10 @@ function lookupMetadata(key) {
  * @return {void}
  */
 module.exports = function(grunt){
-    /*
-     * clearLocalTmp
-     *
+    
+    /**
+     * function that clears the deployment folder structure.
+     * @return {void}
      */
     function clearLocalTmp() {
         if(grunt.file.exists(localTmp)) {
@@ -50,14 +57,23 @@ module.exports = function(grunt){
         }
     }
 
+    /**
+     * function that creates the directories for deployment
+     * @return {void} 
+     */
     function makeLocalTmp() {
         clearLocalTmp();
         grunt.file.mkdir(localTmp);
         grunt.file.mkdir(localTmp + '/ant');
-        //grunt.file.mkdir(localTmp + '/src');
     }
 
-    // TODO: check if this function is necessary
+    /**
+     * function that pase if the auth params comes from command line and set them
+     * on options object
+     * @param  {object} options configuration object
+     * @param  {string} target  deployment org
+     * @return {void}           
+     */
     function parseAuth(options, target) {
         var un = (!options.useEnv) ? options.user  : process.env.SFUSER;
         var pw = (!options.useEnv) ? options.pass  : process.env.SFPASS;
@@ -74,6 +90,13 @@ module.exports = function(grunt){
         grunt.log.writeln('User -> ' + options.user.green);
     }
 
+    /**
+     * function that runs ant task
+     * @param  {string}   task   ant task label
+     * @param  {string}   target notification text
+     * @param  {Function} done   async function
+     * @return {void}            
+     */
     function runAnt(task, target, done) {
         var args =  [
             '-buildfile',
@@ -104,6 +127,12 @@ module.exports = function(grunt){
         });
     }
 
+    /**
+     * function that build the package xml to deploy resources
+     * @param  {object} pkg     meta-data objecte
+     * @param  {string} version saleforce api version
+     * @return {array}          array whith xml
+     */
     function buildPackageXml(pkg, version) {
         var packageXml = [
             '<?xml version="1.0" encoding="UTF-8"?>',
@@ -128,7 +157,10 @@ module.exports = function(grunt){
     }
 
 
-    /* Deploy Task */
+    /**
+     * funtion that register the grunt task and excute deployment
+     * @return {void}
+     */
     grunt.registerMultiTask('deploy', 'Run ANT deploy to Salesforce', function() {
 
         makeLocalTmp();
@@ -137,12 +169,13 @@ module.exports = function(grunt){
         var target = this.target.green;
         var template = grunt.file.read(localAnt + '/antdeploy.build.xml');
 
+        //object that defines configuration for the task
         var options = this.options({
             user: false,
             pass: false,
             token: false,
-            root: 'output',
-            apiVersion: '29.0',
+            root: configuration.path.outputPath,
+            apiVersion: configuration.page.options.apiVersion,
             serverurl: 'https://login.salesforce.com',
             pollWaitMillis: 10000,
             maxPoll: 20,
