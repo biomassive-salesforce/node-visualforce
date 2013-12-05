@@ -39,6 +39,11 @@ exports.buildPages = function(options) {
         htmlCode = utils.regexReplace(htmlCode, tagConfig);
         grunt.file.write(dest, htmlCode);
       }
+    }else{
+      //copies the files and creates the output directory (if no exist)
+      var newPath = abspath.replace(inputPath + htmlFolder, outputPath);
+      
+      grunt.file.copy(abspath, newPath);
     }
   });
 
