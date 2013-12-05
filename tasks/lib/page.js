@@ -20,9 +20,10 @@ exports.buildPages = function(options) {
   var inputPath = options.inputPath;
   var outputPath = options.outputPath + 
                    defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;
-  var tagsToReplace = replacementConfiguration["tags"];
+  var htmlFolder = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].pagesFolder;
+  var tagsToReplace = replacementConfiguration[constants.TAGS_REPLACEMENT_KEY];
 
-  grunt.file.recurse("./" + inputPath + "/src/html/", function (abspath, rootdir, subdir, filename) {
+  grunt.file.recurse("./" + inputPath + htmlFolder, function (abspath, rootdir, subdir, filename) {
     
     var delimiterPos = filename.lastIndexOf(".");
     var extension = filename.substring(delimiterPos + 1, filename.length);

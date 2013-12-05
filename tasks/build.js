@@ -20,7 +20,7 @@ module.exports = function(grunt) {
   		staticResourceName: configuration.fileNames.staticResourceName
   	});
   	
-    staticResources.buildStaticResources(options);
+    staticResources.buildStaticResources(options, this.async());
     page.buildPages(options);
   });
 };

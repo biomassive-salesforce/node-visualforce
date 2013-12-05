@@ -6,6 +6,8 @@
     "grunt-contrib-jshint": "0.1.1",
     "grunt-contrib-watch": "0.5.3",
     "grunt-contrib-compress": "0.5.3",
-    "grunt-contrib-nodeunit": "0.2.2"
+    "grunt-contrib-nodeunit": "0.2.2",
+    "archiver": "0.4.10",
+    "lazystream": "0.1.0"
   }
 }

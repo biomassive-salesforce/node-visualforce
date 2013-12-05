@@ -1,5 +1,6 @@
 "use strict";
 
+var grunt = require("grunt");
 var utils = require("./utils.js");
 var constants = require("./constants.js");
 
@@ -8,11 +9,19 @@ var constants = require("./constants.js");
  * @param {object} options configuration object
  * @return {void}
  */
-exports.buildStaticResources = function(options) {
+exports.buildStaticResources = function(options, done) {
 	
 	//Get Static Resource Name from configuration object
-	var staticResourceName = options.staticResourceName;
+	var inputPath = options.inputPath;
 	var outputPath = options.outputPath;
+	var staticResourceName = options.staticResourceName;
+	var staticResourceFolder = options.staticResourceFolder;
+	
+	//Compress Static Resources
+	var zipper = require('./zipper.js')(grunt);
+
+	zipper.compress(inputPath + staticResourceFolder, outputPath + staticResourceFolder, staticResourceName, 
+					constants.STATIC_RESOURCE_EXTENSION, done);
 
 	//Write Static Resource -meta.xml
 	utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName, outputPath);

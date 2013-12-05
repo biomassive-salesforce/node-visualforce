@@ -16,7 +16,9 @@ exports.getConfiguration = function(){
 			"outputPath": "output/src/",
 			//staticResourceFolder: folder used on input and output path to store the static resources (this property shouldn't 
 			//be changed)
-			"staticResourceFolder": "static-resources/"
+			"staticResourceFolder": "staticresources/",
+			//pagesFolder: folder used on input path to store the html pages (this property shouldn't be changed)
+			"pagesFolder": "pages/"
 		},
 		"fileNames": {//application file name configuration
 			//staticResourceName: static resource file name (configurable)
@@ -40,7 +42,7 @@ exports.getConfiguration = function(){
 			//metatype: static resource meta type
 			"metaType": "StaticResource",
 			//outputPath: folder to store the static resource meta xml
-			"outputPath": "static-resources/",
+			"outputPath": "staticresources/",
 			"options": {//static resource meta configuration items
 				//cacheControl: static resource cache control
 				"cacheControl": "Public",

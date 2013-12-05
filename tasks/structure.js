@@ -15,11 +15,8 @@ module.exports = function(grunt) {
     //loop througth directories
     grunt.file.recurse(conf.path.inputPath, function (abspath, rootdir, subdir, filename) {
 
-      var newPath = abspath.replace(conf.path.inputPath, conf.path.outputPath.replace("/src",""));
-      
-      if (subdir === "src/html") {
-          newPath = abspath.replace(conf.path.inputPath + subdir, conf.path.outputPath + "/src/pages");
-      }
+      var newPath = abspath.replace(conf.path.inputPath, conf.path.outputPath);
+
       //copies the files and creates the output directory
       grunt.file.copy(abspath, newPath);
     });
