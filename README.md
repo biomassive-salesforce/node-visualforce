@@ -41,20 +41,32 @@ Then, you can execute the following tasks from the command line:
 	**************************************************************************************************************************
 ### Build-Task options
 
-#### options.inputPaht
-Type: `String`
-Default value: `'input/'`
-This option sets the source folder where there´re the files to proccess
+### Required
 
-#### options.outputPath
-Type: `String`
-Default value: `output/`
-output folder where the plugin create the *.page files and the static resource file to be deployed on
+  #### options.inputPath
+  Type: `String`
+  Default value: `'input/'`
+  This option sets the source folder where there´re the files to process
 
-#### options.staticResourceName
-Type: `String`
-Default value: `staticResources`
-static resource file name
+  #### options.outputPath
+  Type: `String`
+  Default value: `output/`
+  output folder where the plugin create the *.page files and the static resource file to be deployed on
+
+  #### options.staticResourceName
+  Type: `String`
+  Default value: `staticResources`
+  static resource file name
+
+### Optional
+
+  #### options.apexPageFlags
+  Type: `Object`
+  Default value: `{"showHeader": false, "standardStylesheets": false}`
+  This option sets flags to the <apex:page> tag. You must set flag name (i.e. "showHeader") and value (String, Number or Boolean) as you want. Check all the current flags here: http://www.salesforce.com/us/developer/docs/pages/Content/pages_compref_page.htm
+
+  The default values ("showHeader" and "standardStylesheets") allows the plugin to override the Org standard stylesheets. They are added automatically to the apex:page tag unless you set those flags to true.
+
 
 ### Overview
 In your project's Gruntfile, add a section named `build` to the data object passed into `grunt.initConfig()`.
@@ -65,11 +77,11 @@ grunt.initConfig({
     options: {
     	inputPath:'input/',
     	outputPath:'output/',
-    	staticResourceName:'staticResources'
+    	staticResourceName:'staticResources',
+      apexPageFlags: {"flagName1": value1, "flagName2": value2}
     }
   }
 });
-
 ```
 
 ###grunt deploy
@@ -78,29 +90,29 @@ Deploys all the generated visualforce pages (with metadata) and the static-resou
 
 ### Deploy-Task options
 
-#### options.user
-Type: `String`
-Required: `true`
-Your Salesforce.com username.
+  #### options.user
+  Type: `String`
+  Required: `true`
+  Your Salesforce.com username.
 
-#### options.pass
-Type: `String`
-Required: `true`
-Your Salesforce.com password.
+  #### options.pass
+  Type: `String`
+  Required: `true`
+  Your Salesforce.com password.
 
-#### options.token
-Type: `String`
-Your Salesforce.com security token.
+  #### options.token
+  Type: `String`
+  Your Salesforce.com security token.
 
-#### options.serverurl
-Type: `String`
-Default value: `'https://login.salesforce.com'`
-This option sets login url.
+  #### options.serverurl
+  Type: `String`
+  Default value: `'https://login.salesforce.com'`
+  This option sets login url.
 
-#### options.apiVersion
-Type: `String`
-Default value: `'29.0'`
-This option sets the api version to use for the package deployment.
+  #### options.apiVersion
+  Type: `String`
+  Default value: `'29.0'`
+  This option sets the api version to use for the package deployment.
 
 ### Overview
 In your project's Gruntfile, add a section named `deploy` to the data object passed into `grunt.initConfig()`.
