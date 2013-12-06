@@ -13,7 +13,7 @@ exports.getConfiguration = function(){
 			"inputPath": "input/",
 			//outputPath: output folder where the plugin create the *.page files and the static resource file to be deployed on 
 			//the configured Salesforce Org
-			"outputPath": "output/src/",
+			"outputPath": "output/",
 			//staticResourceFolder: folder used on input and output path to store the static resources (this property shouldn't 
 			//be changed)
 			"staticResourceFolder": "staticresources/",
