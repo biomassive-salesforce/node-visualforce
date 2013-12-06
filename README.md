@@ -74,33 +74,33 @@ grunt.initConfig({
 
 ###grunt deploy
 
-it deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
+Deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
 
 ### Deploy-Task options
 
 #### options.user
 Type: `String`
 Required: `true`
-Your Salesforce.com username
+Your Salesforce.com username.
 
 #### options.pass
 Type: `String`
 Required: `true`
-Your Salesforce.com password
+Your Salesforce.com password.
 
 #### options.token
 Type: `String`
-Your Salesforce.com securitytoken
+Your Salesforce.com security token.
 
 #### options.serverurl
 Type: `String`
 Default value: `'https://login.salesforce.com'`
-This option sets login url
+This option sets login url.
 
 #### options.apiVersion
 Type: `String`
 Default value: `'29.0'`
-This option sets the api version to use for the package deployment
+This option sets the api version to use for the package deployment.
 
 ### Overview
 In your project's Gruntfile, add a section named `deploy` to the data object passed into `grunt.initConfig()`.
@@ -125,6 +125,23 @@ grunt.initConfig({
 })
 ```
 
-Release History
+#### Proxy options
+If you are under a proxy you will need to add the proxy host and port so the ant server can reach the org for deployment, it can be added as an object to the options in this way:
+```js
+grunt.initConfig({
+  deploy: {
+    your_target: {
+      options:{
+          proxyConfig: {
+            proxyHost: "proxy.domain.com",
+            proxyPort: "1111"
+          }
+      },
+      // Target-specific file lists and/or options go here.
+      pkg: {   // Package to deploy
 
-(Nothing yet)
+      }
+    }
+  }
+})
+```
