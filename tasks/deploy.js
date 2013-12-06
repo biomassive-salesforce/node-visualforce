@@ -167,7 +167,13 @@ module.exports = function(grunt){
 
         var done = this.async();
         var target = this.target.green;
-        var template = grunt.file.read(localAnt + '/antdeploy.build.xml');
+
+        if (typeof(this.options().proxyConfig) === "undefined") {
+            var template = grunt.file.read(localAnt + '/antdeploy.build.xml');
+        } else {
+            var template = grunt.file.read(localAnt + '/antdeploy.build.proxy.xml');
+        }
+
 
         //object that defines configuration for the task
         var options = this.options({
@@ -186,12 +192,11 @@ module.exports = function(grunt){
         });
 
         grunt.log.writeln('Deploy Target -> ' + target);
-
         parseAuth(options, target);
 
         options.tests = this.data.tests || [];
-
         var buildFile = grunt.template.process(template, { data: options });
+
         grunt.file.write(localTmp + '/ant/build.xml', buildFile);
 
         var packageXml = buildPackageXml(this.data.pkg, options.apiVersion);

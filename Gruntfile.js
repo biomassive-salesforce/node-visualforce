@@ -30,7 +30,10 @@ module.exports = function(grunt) {
     },
     deploy: {
         options: {
-            // Task-specific options.
+            proxyConfig: {
+                proxyHost: "proxy.corp.globant.com",
+                proxyPort: "3128"
+            }
         },
         dev1: {
             options: {
@@ -55,5 +58,5 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
   // By default, lint and run all tests.
   grunt.registerTask('default', ['watch']);
-  
+    
 };

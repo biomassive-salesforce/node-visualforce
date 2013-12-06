@@ -1,4 +1,6 @@
 <project name="Grunt Salesforce Ant Deploy" default="deploy" xmlns:sf="antlib:com.salesforce">
+  <setproxy proxyhost="<%= proxyConfig.proxyHost %>" proxyport="<%= proxyConfig.proxyPort %>"/>
+
   <target name="deploy">
     <sf:deploy 
       username="<%= user %>" 
