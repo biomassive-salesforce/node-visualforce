@@ -16,7 +16,7 @@ exports.buildPages = function(options) {
   var PAGE_EXT = "page";
 
   var defaultConfiguration = configuration.getConfiguration();
-  var replacementConfiguration = configuration.getReplacementConfiguration();
+  var replacementConfiguration = configuration.getReplacementConfiguration(options);
   var inputPath = options.inputPath;
   var outputPath = options.outputPath + 
                    defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;
@@ -39,6 +39,11 @@ exports.buildPages = function(options) {
         htmlCode = utils.regexReplace(htmlCode, tagConfig);
         grunt.file.write(dest, htmlCode);
       }
+    }else{
+      //copies the files and creates the output directory (if no exist)
+      var newPath = abspath.replace(inputPath + htmlFolder, outputPath);
+      
+      grunt.file.copy(abspath, newPath);
     }
   });
 
