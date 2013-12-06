@@ -36,93 +36,94 @@ Then, you can execute the following tasks from the command line:
 	- it generates all the visualforce page files (and the corresponding metadata files) from the html files located on the /input/pages folder and put them on /output/pages.
 	- it creates a static resource package (and the corresponding metadata file) from all the files located on the /staticresources subfolders and put it on /output/staticresources.
 
-	### Build-Task options
 
-	#### options.inputPaht
-	Type: `String`
-	Default value: `'input/'`
-	This option sets the source folder where there´re the files to proccess
-
-	#### options.outputPath
-	Type: `String`
-	Default value: `output/`
-	output folder where the plugin create the *.page files and the static resource file to be deployed on
-
-	#### options.staticResourceName
-	Type: `String`
-	Default value: `staticResources`
-	static resource file name
-
-	### Overview
-	In your project's Gruntfile, add a section named `build` to the data object passed into `grunt.initConfig()`.
-
-	```js
-	grunt.initConfig({
-	  build: {
-	    options: {
-	    	inputPath:'input/',
-	    	outputPath:'output/',
-	    	staticResourceName:'staticResources'
-	    }
-	  }
-	});
-
-	```
 
 	**************************************************************************************************************************
+### Build-Task options
 
-	grunt deploy
+#### options.inputPaht
+Type: `String`
+Default value: `'input/'`
+This option sets the source folder where there´re the files to proccess
 
-	- it deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
+#### options.outputPath
+Type: `String`
+Default value: `output/`
+output folder where the plugin create the *.page files and the static resource file to be deployed on
 
-	### Deploy-Task options
+#### options.staticResourceName
+Type: `String`
+Default value: `staticResources`
+static resource file name
 
-	#### options.user
-	Type: `String`
-	Required: `true`
-	Your Salesforce.com username
+### Overview
+In your project's Gruntfile, add a section named `build` to the data object passed into `grunt.initConfig()`.
 
-	#### options.pass
-	Type: `String`
-	Required: `true`
-	Your Salesforce.com password
+```js
+grunt.initConfig({
+  build: {
+    options: {
+    	inputPath:'input/',
+    	outputPath:'output/',
+    	staticResourceName:'staticResources'
+    }
+  }
+});
 
-	#### options.token
-	Type: `String`
-	Your Salesforce.com securitytoken
+```
 
-	#### options.serverurl
-	Type: `String`
-	Default value: `'https://login.salesforce.com'`
-	This option sets login url
+###grunt deploy
 
-	#### options.apiVersion
-	Type: `String`
-	Default value: `'29.0'`
-	This option sets the api version to use for the package deployment
+it deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
 
-	### Overview
-	In your project's Gruntfile, add a section named `deploy` to the data object passed into `grunt.initConfig()`.
+### Deploy-Task options
 
-	```js
-	grunt.initConfig({
-	  deploy: {
-	    your_target: {
-	      options:{
-	      	user:'myusername@test.com',
-	        pass:      'mypassword',
-	        token:     'mytoken',
-	        serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
-	        apiVersion: '29.0'
-	      },
-	      // Target-specific file lists and/or options go here.
-	      pkg: {   // Package to deploy
-	        staticresource: ['*']
-	      }
-	    }
-	  }
-	})
-	```
+#### options.user
+Type: `String`
+Required: `true`
+Your Salesforce.com username
+
+#### options.pass
+Type: `String`
+Required: `true`
+Your Salesforce.com password
+
+#### options.token
+Type: `String`
+Your Salesforce.com securitytoken
+
+#### options.serverurl
+Type: `String`
+Default value: `'https://login.salesforce.com'`
+This option sets login url
+
+#### options.apiVersion
+Type: `String`
+Default value: `'29.0'`
+This option sets the api version to use for the package deployment
+
+### Overview
+In your project's Gruntfile, add a section named `deploy` to the data object passed into `grunt.initConfig()`.
+
+```js
+grunt.initConfig({
+  deploy: {
+    your_target: {
+      options:{
+      	user:'myusername@test.com',
+        pass:      'mypassword',
+        token:     'mytoken',
+        serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
+        apiVersion: '29.0'
+      },
+      // Target-specific file lists and/or options go here.
+      pkg: {   // Package to deploy
+        staticresource: ['*']
+      }
+    }
+  }
+})
+```
 
 Release History
 
