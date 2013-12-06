@@ -16,7 +16,7 @@ exports.buildPages = function(options) {
   var PAGE_EXT = "page";
 
   var defaultConfiguration = configuration.getConfiguration();
-  var replacementConfiguration = configuration.getReplacementConfiguration();
+  var replacementConfiguration = configuration.getReplacementConfiguration(options);
   var inputPath = options.inputPath;
   var outputPath = options.outputPath + 
                    defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;

@@ -29,20 +29,20 @@ module.exports = function(grunt) {
       all: ['test/**/*_test.js']
     },
     deploy: {
-        options: {
-            // Task-specific options.
-        },
-        dev1: {
-            options: {
-                user:  'federico@sfadm.test',
-                pass:  'force36206a',
-                token: 'aHJVm2eWU4Ibhl8ndwkkd2wtN'
-            },
-            pkg: {
-                staticresource: ['*'],
-                apexpage: ['*']
-            }
-        }
+      options: {
+          // Task-specific options.
+      },
+      dev1: {
+          options: {
+              user:  'federico@sfadm.test',
+              pass:  'force36206a',
+              token: 'aHJVm2eWU4Ibhl8ndwkkd2wtN'
+          },
+          pkg: {
+              staticresource: ['*'],
+              apexpage: ['*']
+          }
+      }
     }
   });
  

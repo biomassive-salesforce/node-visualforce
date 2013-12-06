@@ -16,3 +16,7 @@ exports.STATIC_RESOURCE_EXTENSION = 'resource';
 
 //Pages Extension
 exports.PAGE_EXTENSION = 'page';
+
+//Apex page flags
+exports.SHOW_HEADER_FLAG = 'showHeader';
+exports.STANDARD_STYLESHEETS_FLAG = 'standardStylesheets';

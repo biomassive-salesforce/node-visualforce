@@ -56,20 +56,26 @@ exports.getConfiguration = function(){
 	return defaultSettings;
 };
 
-
 /**
  * Page tags replacement configuration settings
+ * @param {object} options configuration object
  * @return {object} configuration replacement object
  */
-exports.getReplacementConfiguration = function(){
+exports.getReplacementConfiguration = function(options){
+	var constants = require("./constants.js");
 	var defaultConfiguration = this.getConfiguration();
-	var apexPageFlagsConfiguration = this.getPageFlagsConfiguration();
+	var flagsConfiguration = this.getPageFlagsConfiguration();
 	var staticResourceName = defaultConfiguration["fileNames"].staticResourceName;
-	// generates all the flags for the apex:page tag
+
+	// generates all the flags for the apex:page tag and set tags by default
 	var $flags = "";
-	Object.keys(apexPageFlagsConfiguration).forEach(function(item) {
-		if (apexPageFlagsConfiguration[item].active === true) {
-			$flags += " " + item + "=\"" + apexPageFlagsConfiguration[item].value + "\"";
+	var flagsOptions = (options.apexPageFlags)? options.apexPageFlags : {};
+	flagsOptions[constants.SHOW_HEADER_FLAG] = flagsOptions[constants.SHOW_HEADER_FLAG] || false;
+	flagsOptions[constants.STANDARD_STYLESHEETS_FLAG] = flagsOptions[constants.STANDARD_STYLESHEETS_FLAG] || false;
+	
+	Object.keys(flagsOptions).forEach(function(item) {
+		if(flagsConfiguration.hasOwnProperty(item)) {
+			$flags += " " + item + "=\"" + flagsOptions[item] + "\"";
 		}
     });
 	var replacementSettings = {
@@ -110,130 +116,37 @@ exports.getReplacementConfiguration = function(){
  */
 exports.getPageFlagsConfiguration = function(){
 	var apexPageFlags = {
-		"action": {
-			"value": "{!doAction}",
-			"active": false
-		},
-		"apiVersion": {
-			"value": "29.0",
-			"active": false
-		},
-		"applyBodyTag": {
-			"value": false,
-			"active": false
-		},
-		"applyHtmlTag": {
-			"value": false,
-			"active": false
-		},
-		"cache": {
-			"value": false,
-			"active": false
-		},
-		"contentType": {
-			"value": "text/html",
-			"active": false
-		},
-		"controller": {
-			"value": "",
-			"active": false
-		},
-		"deferLastCommandUntilReady": {
-			"value": false,
-			"active": false
-		},
-		"docType": {
-			"value": "html-5.0",
-			"active": false
-		},
-		"expires": {
-			"value": "600",
-			"active": false
-		},
-		"extensions": {
-			"value": "",
-			"active": false
-		},
-		"id": {
-			"value": "",
-			"active": false
-		},
-		"label": {
-			"value": "",
-			"active": false
-		},
-		"language": {
-			"value": "",
-			"active": false
-		},
-		"manifest": {
-			"value": "",
-			"active": false
-		},
-		"name": {
-			"value": "",
-			"active": false
-		},
-		"pageStyle": {
-			"value": "",
-			"active": false
-		},
-		"readOnly": {
-			"value": false,
-			"active": false
-		},
-		"recordSetName": {
-			"value": "",
-			"active": false
-		},
-		"recordSetVar": {
-			"value": "",
-			"active": false
-		},
-		"renderAs": {
-			"value": "",
-			"active": false
-		},
-		"rendered": {
-			"value": false,
-			"active": false
-		},
-		"setup": {
-			"value": false,
-			"active": false
-		},
-		"showChat": {
-			"value": false,
-			"active": false
-		},
-		"showHeader": {
-			"value": false,
-			"active": true
-		},
-		"sidebar": {
-			"value": false,
-			"active": false
-		},
-		"standardController": {
-			"value": "",
-			"active": false
-		},
-		"standardStylesheets": {
-			"value": false,
-			"active": true
-		},
-		"tabStyle": {
-			"value": "",
-			"active": false
-		},
-		"title": {
-			"value": "",
-			"active": false
-		},
-		"wizard": {
-			"value": false,
-			"active": false
-		}
+		"action": "{!doAction}",
+		"apiVersion": "29.0",
+		"applyBodyTag": false,
+		"applyHtmlTag": false,
+		"cache": false,
+		"contentType": "text/html",
+		"controller": "",
+		"deferLastCommandUntilReady": false,
+		"docType": "html-5.0",
+		"expires": "600",
+		"extensions": "",
+		"id": "",
+		"label": "",
+		"language": "",
+		"manifest": "",
+		"name": "",
+		"pageStyle": "",
+		"readOnly": false,
+		"recordSetName": "",
+		"recordSetVar": "",
+		"renderAs": "",
+		"rendered": false,
+		"setup": false,
+		"showChat": false,
+		"showHeader": false,
+		"sidebar": false,
+		"standardController": "",
+		"standardStylesheets": false,
+		"tabStyle": "",
+		"title": "",
+		"wizard": false
 	}
     return apexPageFlags;
 };
