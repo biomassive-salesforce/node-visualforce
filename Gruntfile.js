@@ -31,8 +31,8 @@ module.exports = function(grunt) {
     deploy: {
         options: {
             proxyConfig: {
-                proxyHost: "proxy.corp.globant.com",
-                proxyPort: "3128"
+              proxyHost: 'proxy.corp.globant.com',
+              proxyPort: '3128'
             }
         },
         dev1: {

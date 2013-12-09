@@ -2,7 +2,6 @@
 
 var grunt = require('grunt');
 var configuration = require('./configuration.js');
-var constants = require("./constants.js");
 
 /**
  * function that builds the meta-data files
@@ -17,7 +16,7 @@ exports.buildXMLMeta = function(type, fileName, extension, outputDir) {
 	var outputPath = outputDir + defaultConfiguration[type].outputPath;
   var options = defaultConfiguration[type].options;
 
-  var LABEL = "label";
+  var LABEL = 'label';
   
   var packageXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',

@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var zlib = require('zlib');
@@ -18,28 +20,28 @@ module.exports = function(grunt){
 	};
 
 	/**
- 	* Compress 'inputPath' content in 'outputPath' with 'filename'.'extension'
- 	* @param  {String} inputPath: input path 
- 	* @param  {String} outputPath: path to save the zip file builded 
- 	* @param  {String} filename: file name 
- 	* @param  {String} extension: file extension 
- 	* @param  {Object} done: async done flag 
- 	* @return {void}       
- 	*/
+	* Compress 'inputPath' content in 'outputPath' with 'filename'.'extension'
+	* @param  {String} inputPath: input path 
+	* @param  {String} outputPath: path to save the zip file builded 
+	* @param  {String} filename: file name
+	* @param  {String} extension: file extension 
+	* @param  {Object} done: async done flag 
+	* @return {void}
+	*/
 	exports.compress = function(inputPath, outputPath, filename, extension, done){
 		
-		zipConfig["options"].archive =  outputPath + filename + "." + extension;
-		zipConfig["files"][0]["cwd"] = inputPath;
+		zipConfig['options'].archive =  outputPath + filename + '.' + extension;
+		zipConfig['files'][0]['cwd'] = inputPath;
 		
 		this.tar(buildFiles(inputPath), done);
-	}
+	};
 
 	/**
- 	* Compress with tar, tgz and zip
- 	* @param  {Object} files: files to be processed 
- 	* @param  {Object} done: async done flag  	
-	* @return {void}       
- 	*/
+	* Compress with tar, tgz and zip
+	* @param  {Object} files: files to be processed 
+	* @param  {Object} done: async done flag 
+	* @return {void}
+	*/
 	exports.tar = function(files, done) {
 	    if (typeof zipConfig.options.archive !== 'string' || zipConfig.options.archive.length === 0) {
 	      grunt.fail.warn('Unable to compress; no valid archive file was specified.');
@@ -73,7 +75,7 @@ module.exports = function(grunt){
 	    });
 
 	    destStream.on('close', function() {
-	      grunt.log.writeln('Created ' + String(dest).cyan + ' (' + exports.getSize(dest, false) + ')');
+	      grunt.log.writeln('Created ' + String(dest).cyan + ' (' + exports.getSize(dest) + ')');
 	      done();
 	    });
 
@@ -103,7 +105,10 @@ module.exports = function(grunt){
 	        });
 
 	        archive.append(srcStream, { name: internalFileName }, function(err) {
-	          grunt.verbose.writeln('Archiving ' + srcFile.cyan + ' -> ' + String(dest).cyan + '/'.cyan + internalFileName.cyan);
+				if(err){
+					throw err;
+				}
+				grunt.verbose.writeln('Archiving ' + srcFile.cyan + ' -> ' + String(dest).cyan + '/'.cyan + internalFileName.cyan);
 	        });
 	      });
 	    });
@@ -111,12 +116,11 @@ module.exports = function(grunt){
 	};
 
 	/**
- 	* Returns 'filename' size
- 	* @param  {String} filename: file name 
- 	* @param  {Boolean} pretty: flag 
+	* Returns 'filename' size
+	* @param  {String} filename: file name
 	* @return {Integer}  file size     
- 	*/
-	exports.getSize = function(filename, pretty) {
+	*/
+	exports.getSize = function(filename) {
 	    var size = 0;
 	    if (typeof filename === 'string') {
 	      try {
@@ -129,10 +133,10 @@ module.exports = function(grunt){
 	};
 
 	/**
- 	* Returns 'filepath' according the platform
- 	* @param  {String} filepath: file name 
+	* Returns 'filepath' according the platform
+	* @param  {String} filepath: file name 
 	* @return {String} filePath in format win32 or unix     
- 	*/
+	*/
 	exports.unixifyPath = function(filepath) {
 	    if (process.platform === 'win32') {
 	      return filepath.replace(/\\/g, '/');
@@ -142,11 +146,11 @@ module.exports = function(grunt){
 	};
 
 	/**
- 	* Builds the files object from 'inputPath' 
- 	* @param  {String} inputPath: file name 
+	* Builds the files object from 'inputPath' 
+	* @param  {String} inputPath: file name 
 	* @return {Object} file object     
- 	*/
-	buildFiles = function(inputPath){
+	*/
+	var buildFiles = function(inputPath){
 		var files = [];
 		var folderArray = [];
 		var result = fs.existsSync(inputPath);
@@ -155,18 +159,18 @@ module.exports = function(grunt){
 			grunt.file.recurse(inputPath, function(abspath, rootdir, subdir, filename){
 
 				//If the directory was not processed 
-				if(folderArray.indexOf(subdir) != 0){
+				if(folderArray.indexOf(subdir) !== 0){
 					folderArray.push(subdir);
 
 					files.push({
 						src : [ rootdir + subdir ],
 						dest: subdir,
 					    orig:
-						    { expand: zipConfig["files"][0]["expand"],
-						       cwd: rootdir,
-						       src: zipConfig["files"][0]["src"],
-						       dest: zipConfig["files"][0]["dest"] 
-						   	} 
+						    { expand: zipConfig['files'][0]['expand'],
+								cwd: rootdir,
+								src: zipConfig['files'][0]['src'],
+								dest: zipConfig['files'][0]['dest']
+							}
 					});
 				}
 				
@@ -174,17 +178,16 @@ module.exports = function(grunt){
 					src : [ abspath ],
 					dest: subdir + '/' + filename,
 				    orig:
-					    { expand: zipConfig["files"][0]["expand"],
-					       cwd: rootdir,
-					       src: zipConfig["files"][0]["src"],
-					       dest: zipConfig["files"][0]["dest"] 
-					   	} 
+						{ expand: zipConfig['files'][0]['expand'],
+							cwd: rootdir,
+							src: zipConfig['files'][0]['src'],
+							dest: zipConfig['files'][0]['dest']
+						}
 				});
-			});			
-		} 
-
+			});
+		}
 		return files;
-	}
+	};
 
 	return exports;
 };

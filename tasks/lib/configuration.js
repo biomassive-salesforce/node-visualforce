@@ -6,7 +6,7 @@
  */
 exports.getConfiguration = function(){
 	//Default configuration
-	var defaultSettings = {		
+	var defaultSettings = {
 		"path": { // application paths to define output and source files
 			//inputPath: source input path, where the src/html and static-resources (css, fonts, img, js) folders needs to be 
 			//located
@@ -80,7 +80,7 @@ exports.getReplacementConfiguration = function(options){
     });
 	var replacementSettings = {
 	    "tags": {
-	    	"doctype": {
+			"doctype": {
 				"name": "<!DOCTYPE>",
 				"regex": /<!DOCTYPE(.*?)>/ig,
 				"replacement": ""
@@ -147,6 +147,6 @@ exports.getPageFlagsConfiguration = function(){
 		"tabStyle": "",
 		"title": "",
 		"wizard": false
-	}
+	};
     return apexPageFlags;
 };

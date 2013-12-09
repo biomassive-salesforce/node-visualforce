@@ -18,7 +18,7 @@ exports.buildPages = function(options) {
   var defaultConfiguration = configuration.getConfiguration();
   var replacementConfiguration = configuration.getReplacementConfiguration(options);
   var inputPath = options.inputPath;
-  var outputPath = options.outputPath + 
+  var outputPath = options.outputPath +
                    defaultConfiguration[constants.PAGE_CONFIGURATION_KEY].outputPath;
   var htmlFolder = defaultConfiguration[constants.PATH_CONFIGURATION_KEY].pagesFolder;
   var tagsToReplace = replacementConfiguration[constants.TAGS_REPLACEMENT_KEY];

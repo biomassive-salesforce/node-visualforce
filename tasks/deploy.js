@@ -21,7 +21,6 @@ function lookupMetadata(key) {
         typeName = metadata[key].xmlType;
     } else {
         // try to match on folder
-        var typeName;
         Object.keys(metadata).forEach(function(mk) {
             var folder = metadata[mk].folder;
             if(typeof folder === 'string' && folder.toLowerCase() === key) {
@@ -78,10 +77,10 @@ module.exports = function(grunt){
         var un = (!options.useEnv) ? options.user  : process.env.SFUSER;
         var pw = (!options.useEnv) ? options.pass  : process.env.SFPASS;
         var tk = (!options.useEnv) ? options.token : process.env.SFTOKEN;
-        if(tk) pw += tk;
+        if(tk){ pw += tk; }
         if(!un) { grunt.log.error('no username specified for ' + target); }
         if(!pw) { grunt.log.error('no password specified for ' + target); }
-        if(!un || !pw) grunt.fail.warn('username/password error');
+        if(!un || !pw){ grunt.fail.warn('username/password error'); }
         options.user = un;
         options.pass = pw;
         if(options.useEnv && process.env.SFSERVERURL) {
@@ -168,7 +167,7 @@ module.exports = function(grunt){
         var done = this.async();
         var target = this.target.green;
 
-        if (typeof(this.options().proxyConfig) === "undefined") {
+        if (typeof(this.options().proxyConfig) === 'undefined') {
             var template = grunt.file.read(localAnt + '/antdeploy.build.xml');
         } else {
             var template = grunt.file.read(localAnt + '/antdeploy.build.proxy.xml');
@@ -209,4 +208,4 @@ module.exports = function(grunt){
 
     });
 
-}
+};

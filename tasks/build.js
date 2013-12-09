@@ -10,16 +10,16 @@ var configuration = require('./lib/configuration').getConfiguration();
  * @return {void}       
  */
 module.exports = function(grunt) {
-  grunt.registerTask('build', function(){
+    grunt.registerTask('build', function(){
 
-  	//set default configurations
-  	var options = this.options({
-  		inputPath: configuration.path.inputPath,
-  		outputPath: configuration.path.outputPath,
-  		staticResourceFolder: configuration.path.staticResourceFolder,
-  		staticResourceName: configuration.fileNames.staticResourceName
-  	});
-  	
+    //set default configurations
+    var options = this.options({
+      inputPath: configuration.path.inputPath,
+      outputPath: configuration.path.outputPath,
+      staticResourceFolder: configuration.path.staticResourceFolder,
+      staticResourceName: configuration.fileNames.staticResourceName
+    });
+  
     staticResources.buildStaticResources(options, this.async());
     page.buildPages(options);
   });
