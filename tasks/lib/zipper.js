@@ -29,10 +29,11 @@ module.exports = function(grunt){
 	* @return {void}
 	*/
 	exports.compress = function(inputPath, outputPath, filename, extension, done){
-		
+		//Overwrite default configuration
 		zipConfig['options'].archive =  outputPath + filename + '.' + extension;
 		zipConfig['files'][0]['cwd'] = inputPath;
-		
+
+		//Starts the compression
 		this.tar(buildFiles(inputPath), done);
 	};
 
@@ -157,11 +158,14 @@ module.exports = function(grunt){
 
 		if(result){
 			grunt.file.recurse(inputPath, function(abspath, rootdir, subdir, filename){
+				//Sets subdir to blank if is undefined to allows the user to put static resources in the root folder
+				subdir = subdir?subdir:'';
 
 				//If the directory was not processed 
 				if(folderArray.indexOf(subdir) !== 0){
 					folderArray.push(subdir);
 
+					//Add a directory to the array
 					files.push({
 						src : [ rootdir + subdir ],
 						dest: subdir,
@@ -174,6 +178,7 @@ module.exports = function(grunt){
 					});
 				}
 				
+				//Add a file to the array
 				files.push({
 					src : [ abspath ],
 					dest: subdir + '/' + filename,
