@@ -173,3 +173,21 @@ grunt.initConfig({
   }
 })
 ```
+
+####Undeploy
+In the case you want to undeploy all the site or some specific pages you can use the "undeploy" grunt task, it will remove the pages and staticresources specified in the options of the task:
+```js
+grunt.initConfig({
+  undeploy: {
+    your_target: {
+      options:{
+      },
+      // Target-specific file lists and/or options go here.
+      pkg: {   
+        apexpages: [index, section1],
+        staticresources: [staticresources]
+      }
+    }
+  }
+})
+```

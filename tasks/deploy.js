@@ -208,4 +208,51 @@ module.exports = function(grunt){
 
     });
 
+    /*************************************
+   * antdestroy task
+   *************************************/
+
+  grunt.registerMultiTask('undeploy', 'Run ANT destructive changes to Salesforce', function() {
+
+    makeLocalTmp();
+
+    var done = this.async();
+    var target = this.target.green;
+    var template = grunt.file.read(localAnt + '/antdeploy.build.xml');
+
+    var options = this.options({
+      user: false,
+      pass: false,
+      token: false,
+      root: 'build',
+      apiVersion: '29.0',
+      serverurl: 'https://login.salesforce.com',
+      checkOnly: false,
+      runAllTests: false,
+      rollbackOnError: true,
+      useEnv: false
+    });
+
+    grunt.log.writeln('Destroy Target -> ' + target);
+
+    parseAuth(options, target);
+
+    options.tests = this.data.tests || [];
+
+    var buildFile = grunt.template.process(template, { data: options });
+    grunt.file.write(localTmp + '/ant/build.xml', buildFile);
+
+    var packageXml = buildPackageXml(null, options.apiVersion);
+    grunt.file.write(options.root + '/package.xml', packageXml);
+
+    var destructiveXml = buildPackageXml(this.data.pkg, options.apiVersion);
+    grunt.file.write(options.root + '/destructiveChanges.xml', destructiveXml);
+
+    runAnt('deploy', target, function(err, result) {
+      clearLocalTmp();
+      done();
+    });
+
+  });
+
 };
