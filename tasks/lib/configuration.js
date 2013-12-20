@@ -97,13 +97,18 @@ exports.getReplacementConfiguration = function(options){
 			},
 			"link": {
 				"name": "<link>",
-				"regex": /<link(.*?)href="(.*?)"(.*?)>/ig,
+				"regex": /<link(.*?)href=["|'](.*?)["|'](.*?)>/ig,
 				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
 			},
 			"script": {
 				"name": "<script>",
-				"regex": /<script(.*?)src="(.*?)"(.*?)><\/script>/ig,
+				"regex": /<script(.*?)src=["|'](.*?)["|'](.*?)><\/script>/ig,
 				"replacement": "<apex:includeScript value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
+			},
+			"img": {
+				"name": "<img>",
+				"regex": /<img(.*?)src=["|'](.*?)["|'](.*?)\/>/ig,
+				"replacement": "<img$1value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
 			}
 		}
 	};
