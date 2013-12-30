@@ -1,6 +1,6 @@
 ##Node-visualforce
 
-Node-visualforce is a Grunt plugin that allows a user to deploy a static web project into a Salesforce ORG as Visualforce pages including their static resources (css, img, fonts, js).
+Node-visualforce is a Grunt plugin that allows to deploy a static web project into a Salesforce ORG as Visualforce pages including their static resources (css, img, fonts, js).
 It converts .html files to visualforce .page format and generates the corresponding apex tags and xml files.
 For the static resources it compresses all files in the designated folder to a one .resource file.
 This Grunt plugin works using the migration tool API to connect to a Salesforce ORG, so it requires ANT installed. 
