@@ -16,13 +16,13 @@ npm install grunt-node-visualforce --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
-
+```js
   grunt.loadNpmTasks('grunt-node-salesforce');
-
+```
 If you want to create a 'Build' and 'Deploy' grunt task you can add the following to Gruntfile
-
+```js
   grunt.registerTask('buildAndDeploy', ['build', 'deploy']);
-
+```
 Once you added the task to your Gruntfile, you have to put all your project files inside the following folder structure:
 ```shell
   - /input
