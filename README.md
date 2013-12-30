@@ -1,13 +1,13 @@
 ##Node-visualforce.
 
-Node Visualforce allows a user to deploy a static web project into a Salesforce ORG as Visualforce pages including their static resources (css, img, fonts, js).
+Node-visualforce allows a user to deploy a static web project into a Salesforce ORG as Visualforce pages including their static resources (css, img, fonts, js).
 It converts .html files to visualforce .page format and generates the corresponding apex tags and xml files.
 For the static resources it compresses all files in the designated folder to a one .resource file generating also it's xml.
-This Grunt Plugin works using the migration tool ANT API to connect to a Salesforce ORG, so it requires ANT installed. 
+This Grunt plugin works using the migration tool API to connect to a Salesforce ORG, so it requires ANT installed. 
 
 ###Getting Started
 
-###Package.json setup
+##Package.json setup
 
 We recommend that the package.json file includes the following dependencies:
 
@@ -68,9 +68,10 @@ grunt.initConfig({
             serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
             apiVersion: '29.0'
           },
-          // Target-specific file lists and/or options go here.
-          pkg: {   // Package to deploy
-            staticresource: ['*']
+          // This config option is used by he package.xml generator, you can target specific files or using '*' fot targeting all of a specific type
+          pkg: {
+            staticresource: ['*'],
+            apexpage: ['*']
           }
         }
     }
@@ -87,9 +88,9 @@ Running the command 'grunt build' creates the following /output folder structure
     - /pages                #visualforce page files will be here
     - /staticresources      #static resources package will be here
 ```
-it generates all the visualforce page files (and the corresponding metadata files) from the html files located on the /input/pages folder and put them on /output/pages.
+It generates the visualforce page files (and the corresponding metadata files) from the html files located on the /input/pages folder and put them on /output/pages.
 
-it creates a static resource package (and the corresponding metadata file) from all the files located on the /staticresources subfolders and put it on /output/staticresources.
+It creates a static resource package (and the corresponding metadata file) from all the files located on the /staticresources subfolders and put it on /output/staticresources.
 
 ### Build-Task options
 
@@ -149,7 +150,7 @@ Default value: `'29.0'`
 This option sets the api version to use for the package deployment.
 
 ####Proxy options
-If you are under a proxy you will need to add the proxy host and port so the ant server can reach the org for deployment, it can be added as an object to the options in this way:
+If you are under a proxy you will need to add the proxy host and port to the deploy config module so the ant server can reach the org for deployment:
 ```js
 grunt.initConfig({
   deploy: {
@@ -159,10 +160,6 @@ grunt.initConfig({
             proxyHost: "proxy.domain.com",
             proxyPort: "1111"
           }
-      },
-      // Target-specific file lists and/or options go here.
-      pkg: {   // Package to deploy
-
       }
     }
   }
@@ -170,7 +167,7 @@ grunt.initConfig({
 ```
 
 ####Undeploy
-In the case you want to undeploy all the site or some specific pages you can use the "undeploy" grunt task, it will remove the pages and staticresources specified in the options of the task:
+running the command 'grunt undeploy' removes all the pages and staticresources specified in the options of the task:
 ```js
 grunt.initConfig({
   undeploy: {
