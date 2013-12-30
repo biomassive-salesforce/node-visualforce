@@ -1,8 +1,11 @@
-##Grunt Node Salesforce, enables Salesforce application development. 
+##Node-visualforce.
+
+Node Visualforce allows a user to deploy a static web projects into Salesforce as Visualforce pages including their static resources (css, img, fonts, js).
+It converts .html files to visualforce .page format and generates the corresponding xml files.
+For the static resources it compresses all files in the designated folder to a one .zip generating also it's xml.
+This Grunt Plugin works using the migration tool ANT API to connect to a Salesforce ORG, so it requires ANT installed. 
 
 ###Getting Started
-
-This plugin requires Grunt ~0.4.2
 
 ###Package.json setup
 
@@ -37,17 +40,48 @@ Once you added the task to your Gruntfile, you have to put all your project file
 ```shell
   - /input
     - /pages               #put all your .html files here
-    - /staticresources     #static resources folder
-      - /css               #put all your .css files here
-      - /js                #put all your .js files here
-      - /img               #put all your image files here
-      - /fonts             #put all your fonts files here
+    - /staticresources     #static resources folder put your resources files here.
+      - /css
+      - /js
+      - /img
+      - /fonts
 ```
-Then, you can execute the following tasks from the command line:
+###Configuring the plugin
+
+The plugin is configured in two separate modules called build and deploy showed in the example:
+
+```js
+grunt.initConfig({
+  build: {
+    options: {
+      inputPath:'input/',
+      outputPath:'output/',
+      staticResourceName:'staticResources',
+      apexPageFlags: {"flagName1": value1, "flagName2": value2}
+    },
+    deploy: {
+        your_target: {
+          options:{
+            user:'myusername@test.com',
+            pass:      'mypassword',
+            token:     'mytoken',
+            serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
+            apiVersion: '29.0'
+          },
+          // Target-specific file lists and/or options go here.
+          pkg: {   // Package to deploy
+            staticresource: ['*']
+          }
+        }
+    }
+  }
+});
+```
+
 
 ###Grunt build
+Running the command 'grunt build' creates the following /output folder structure
 
-it creates the following /output folder structure
 ```shell
   - /output
     - /pages                #visualforce page files will be here
@@ -84,25 +118,9 @@ This option sets flags to the <apex:page> tag. You must set flag name (i.e. "sho
 The default values ("showHeader" and "standardStylesheets") allows the plugin to override the Org standard stylesheets. They are added automatically to the apex:page tag unless you set those flags to true.
 
 
-###Overview
-In your project's Gruntfile, add a section named `build` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  build: {
-    options: {
-      inputPath:'input/',
-      outputPath:'output/',
-      staticResourceName:'staticResources',
-      apexPageFlags: {"flagName1": value1, "flagName2": value2}
-    }
-  }
-});
-```
-
 ###Grunt Deploy
 
-Deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
+Running the command 'grunt deploy' deploys all the generated visualforce pages (with metadata) and the static-resources package (with metadata) to the configured Salesforce Org.
 
 ###Deploy-Task options
 
@@ -129,29 +147,6 @@ This option sets login url.
 Type: `String`
 Default value: `'29.0'`
 This option sets the api version to use for the package deployment.
-
-###Overview
-In your project's Gruntfile, add a section named `deploy` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  deploy: {
-    your_target: {
-      options:{
-        user:'myusername@test.com',
-        pass:      'mypassword',
-        token:     'mytoken',
-        serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
-        apiVersion: '29.0'
-      },
-      // Target-specific file lists and/or options go here.
-      pkg: {   // Package to deploy
-        staticresource: ['*']
-      }
-    }
-  }
-})
-```
 
 ####Proxy options
 If you are under a proxy you will need to add the proxy host and port so the ant server can reach the org for deployment, it can be added as an object to the options in this way:
