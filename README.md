@@ -43,22 +43,22 @@ grunt.initConfig({
       outputPath:'output/',
       staticResourceName:'staticResources',
       apexPageFlags: {"flagName1": value1, "flagName2": value2}
-    },
-    deploy: {
-        your_target: {
-          options:{
-            user:'myusername@test.com',
-            pass:      'mypassword',
-            token:     'mytoken',
-            serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
-            apiVersion: '29.0'
-          },
-          // This config option is used by he package.xml generator, you can target specific files or using '*' fot targeting all of a specific type
-          pkg: {
-            staticresource: ['*'],
-            apexpage: ['*']
-          }
-        }
+    }
+  },
+  deploy: {
+    your_target: {
+      options:{
+        user:'myusername@test.com',
+        pass:      'mypassword',
+        token:     'mytoken',
+        serverurl: 'https://test.salesforce.com', // default => https://login.salesforce.com
+        apiVersion: '29.0'
+      },
+      // This config option is used by he package.xml generator, you can target specific files or using '*' fot targeting all of a specific type
+      pkg: {
+        staticresource: ['*'],
+        apexpage: ['*']
+      }
     }
   }
 });
