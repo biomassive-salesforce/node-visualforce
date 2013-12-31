@@ -161,35 +161,42 @@ module.exports = function(grunt){
 				//Sets subdir to blank if is undefined to allows the user to put static resources in the root folder
 				subdir = subdir?subdir:'';
 
-				//If the directory was not processed 
-				if(folderArray.indexOf(subdir) !== 0){
-					folderArray.push(subdir);
+				if (subdir != '.DS_Store') {
 
-					//Add a directory to the array
+					//@todo check folderArray var remove .sarasa entries
+
+					//If the directory was not processed 
+					if(folderArray.indexOf(subdir) !== 0){
+						folderArray.push(subdir);
+
+						//Add a directory to the array
+						files.push({
+							src : [ rootdir + subdir ],
+							dest: subdir,
+						    orig:
+							    { expand: zipConfig['files'][0]['expand'],
+									cwd: rootdir,
+									src: zipConfig['files'][0]['src'],
+									dest: zipConfig['files'][0]['dest']
+								}
+						});
+					}
+					
+					//Add a file to the array
 					files.push({
-						src : [ rootdir + subdir ],
-						dest: subdir,
+						src : [ abspath ],
+						dest: subdir + '/' + filename,
 					    orig:
-						    { expand: zipConfig['files'][0]['expand'],
+							{ expand: zipConfig['files'][0]['expand'],
 								cwd: rootdir,
 								src: zipConfig['files'][0]['src'],
 								dest: zipConfig['files'][0]['dest']
 							}
 					});
-				}
-				
-				//Add a file to the array
-				files.push({
-					src : [ abspath ],
-					dest: subdir + '/' + filename,
-				    orig:
-						{ expand: zipConfig['files'][0]['expand'],
-							cwd: rootdir,
-							src: zipConfig['files'][0]['src'],
-							dest: zipConfig['files'][0]['dest']
-						}
-				});
+				};
 			});
+			console.log(folderArray);
+			console.log(files);
 		}
 		return files;
 	};
