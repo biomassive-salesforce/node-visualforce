@@ -46,7 +46,8 @@ exports.buildXMLMeta = function(type, fileName, extension, outputDir) {
 exports.regexReplace = function(src, tagConfig) {
     var defaultConfiguration = configuration.getConfiguration();
     var staticResourceFolder = defaultConfiguration["package"].outputPath;
-    var cleanedHTMLString = String(src).replace('../'+staticResourceFolder, '');
+    var regex = new RegExp("../" + staticResourceFolder, "g");
+    var cleanedHTMLString = String(src).replace(regex, '');
 
     return cleanedHTMLString.replace(tagConfig.regex, tagConfig.replacement);
 };
