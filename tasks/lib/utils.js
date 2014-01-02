@@ -95,3 +95,8 @@ exports.createInputStructure = function(options){
     fs.mkdirSync(options.inputPath + defaultConfiguration.path.staticResourceFolder + '/', "0777");
   }
 }
+
+//checks unix hidden path.
+exports.isUnixHiddenPath = function (argument) {
+  return (/(^|.\/)\.+[^\/\.]/g).test(argument);
+}

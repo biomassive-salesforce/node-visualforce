@@ -5,6 +5,7 @@ var path = require('path');
 var zlib = require('zlib');
 var archiver = require('archiver');
 var Readable = require('lazystream').Readable;
+var utils = require('./utils');
 
 module.exports = function(grunt){
 
@@ -146,6 +147,8 @@ module.exports = function(grunt){
 	    }
 	};
 
+	
+
 	/**
 	* Builds the files object from 'inputPath' 
 	* @param  {String} inputPath: file name 
@@ -153,6 +156,7 @@ module.exports = function(grunt){
 	*/
 	var buildFiles = function(inputPath){
 		var files = [];
+		var that = this;
 		var folderArray = [];
 		var result = fs.existsSync(inputPath);
 
@@ -161,10 +165,9 @@ module.exports = function(grunt){
 				//Sets subdir to blank if is undefined to allows the user to put static resources in the root folder
 				subdir = subdir?subdir:'';
 
-				if (subdir != '.DS_Store') {
+				if (!utils.isUnixHiddenPath(subdir)) {
 
-					//@todo check folderArray var remove .sarasa entries
-
+					
 					//If the directory was not processed 
 					if(folderArray.indexOf(subdir) !== 0){
 						folderArray.push(subdir);
@@ -195,8 +198,7 @@ module.exports = function(grunt){
 					});
 				};
 			});
-			console.log(folderArray);
-			console.log(files);
+			
 		}
 		return files;
 	};
