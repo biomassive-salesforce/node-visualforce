@@ -5,7 +5,7 @@ var path = require('path');
 var zlib = require('zlib');
 var archiver = require('archiver');
 var Readable = require('lazystream').Readable;
-var utils = require('./utils');
+var utils = require('./utils.js');
 
 module.exports = function(grunt){
 
