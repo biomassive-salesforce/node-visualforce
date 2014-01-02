@@ -44,12 +44,13 @@ exports.buildXMLMeta = function(type, fileName, extension, outputDir) {
  * @return {string} modified string          
  */
 exports.regexReplace = function(src, tagConfig) {
-    var defaultConfiguration = configuration.getConfiguration();
-    var staticResourceFolder = defaultConfiguration["package"].outputPath;
-    var regex = new RegExp("../" + staticResourceFolder, "g");
-    var cleanedHTMLString = String(src).replace(regex, '');
+  var defaultConfiguration = configuration.getConfiguration();
+  var staticResourceFolder = defaultConfiguration["package"].outputPath;
 
-    return cleanedHTMLString.replace(tagConfig.regex, tagConfig.replacement);
+  var regex = new RegExp('(http(.*?)|..)/' + staticResourceFolder, "ig");
+  var cleanedHTMLString = String(src).replace(regex, '');
+
+  return cleanedHTMLString.replace(tagConfig.regex, tagConfig.replacement);
 };
 
 /**
