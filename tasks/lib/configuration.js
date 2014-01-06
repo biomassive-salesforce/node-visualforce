@@ -80,32 +80,37 @@ exports.getReplacementConfiguration = function(options){
     });
 	var replacementSettings = {
 	    "tags": {
-			"doctype": {
+			"doctype": { //replace for doctype tags
 				"name": "<!DOCTYPE>",
 				"regex": /<!DOCTYPE(.*?)>/ig,
 				"replacement": ""
 			},
-			"htmlOpen": {
+			"htmlOpen": { //replace for html opening tags
 				"name": "<html>",
 				"regex": /<html(.*?)>/ig,
 				"replacement": "<apex:page" + $flags + ">"
 			},
-			"htmlClose": {
+			"htmlClose": { //replace for html closing tags
 				"name": "</html>",
 				"regex": /<\/html>/ig,
 				"replacement": "</apex:page>"
 			},
-			"link": {
+			"link": { //replace for link tags (stylesheets) with rel before href
 				"name": "<link>",
-				"regex": /<link(.*?)href=["|'](.*?)["|'](.*?)>/ig,
-				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
+				"regex": /<link(.*?)rel="stylesheet"?(.*?)href=("|')(.*?)("|')(.*?)>/ig,
+				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$4\")}'/>"
 			},
-			"script": {
+			"link2": { //replace for link tags (stylesheets) with rel after href
+				"name": "<link2>",
+				"regex": /<link(.*?)href=("|')(.*?)("|')(.*?)rel="stylesheet"?(.*?)>/ig,
+				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$3\")}'/>"
+			},
+			"script": { //replace for script tags
 				"name": "<script>",
 				"regex": /<script(.*?)src=["|'](.*?)["|'](.*?)><\/script>/ig,
 				"replacement": "<apex:includeScript value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
 			},
-			"img": {
+			"img": { //replace for img tags
 				"name": "<img>",
 				"regex": /<img(.*?)src=["|'](.*?)["|'](.*?)\/>/ig,
 				"replacement": "<img$1value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
