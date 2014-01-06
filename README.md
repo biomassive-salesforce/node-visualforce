@@ -168,3 +168,5 @@ grunt.initConfig({
   }
 })
 ```
+
+Node-Visualforce includes a To Do List simple sample to be able to validate the correct plugin's installation and configuration. Please go to your node_modules/node-visualforce/sample and follow the instructions detailed in the README file.
