@@ -31,6 +31,8 @@ Once you added the task to your Gruntfile, you have to put all your project file
       - /img
       - /fonts
 ```
+Internally you need to reference the static resources (css, js, img, fonts) using absolute or relative ('../' or '/') paths 
+
 ###Configuring the plugin
 
 The plugin is configured in two separate modules called build and deploy showed in the example:

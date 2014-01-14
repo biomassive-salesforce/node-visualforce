@@ -33,7 +33,7 @@ exports.getConfiguration = function(){
 				//apiVersion: api version to be used by the page
 				"apiVersion": "29.0",
 				//description: general page description
-				"description": "Page upload on Salesforce using Grunt SF Deploy plugin",
+				"description": "Page uploaded via node-visualforce plugin",
 				//label: page name 
 				"label": "Page Name"
 			}
@@ -113,7 +113,7 @@ exports.getReplacementConfiguration = function(options){
 			"img": { //replace for img tags
 				"name": "<img>",
 				"regex": /<img(.*?)src=["|'](.*?)["|'](.*?)\/>/ig,
-				"replacement": "<img$1value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
+				"replacement": "<apex:image$1value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
 			}
 		}
 	};
