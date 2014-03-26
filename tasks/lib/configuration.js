@@ -110,10 +110,15 @@ exports.getReplacementConfiguration = function(options){
 				"regex": /<script(.*?)src=["|'](.*?)["|'](.*?)><\/script>/ig,
 				"replacement": "<apex:includeScript value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
 			},
+			"imgClass": { //replace for img class
+				"name": "<img>",
+				"regex": /<img(.*?)class=["|'](.*?)["|'](.*?)\/>/ig,
+				"replacement": "<img$1styleClass='$2'$3/>"
+			},
 			"img": { //replace for img tags
 				"name": "<img>",
 				"regex": /<img(.*?)src=["|'](.*?)["|'](.*?)\/>/ig,
-				"replacement": "<apex:image$1value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
+				"replacement": "<img$1src='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
 			}
 		}
 	};
