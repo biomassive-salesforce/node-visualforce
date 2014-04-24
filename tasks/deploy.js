@@ -6,7 +6,7 @@ var configuration = require('./lib/configuration').getConfiguration();
 var localTmp = path.resolve(__dirname, '../tmp');
 var localAnt = path.resolve(__dirname, '../ant');
 var localLib = path.resolve(__dirname, '../deps');
-
+var exec = require('child_process').exec;
 
 /**
  * function that seeks for the metadata
@@ -97,33 +97,25 @@ module.exports = function(grunt){
      * @return {void}            
      */
     function runAnt(task, target, done) {
-        var args =  [
-            '-buildfile',
-            localTmp + '/ant/build.xml',
-            '-lib',
-            localLib,
-            '-Dbasedir='     + process.cwd()
-        ];
-        args.push(task);
-        grunt.log.debug('ANT CMD: ant ' + args.join(' '));
-        grunt.log.writeln('Starting ANT ' + task + '...');
-        var ant = grunt.util.spawn({
-            cmd: 'ant',
-            args: args
-        }, function(error, result, code) {
-            if(error) {
-                grunt.fail.warn(error, code);
-            } else {
-                grunt.log.ok(task + ' target ' + target + ' successful');
-            }
-            done(error, result);
-        });
-        ant.stdout.on('data', function(data) {
-            grunt.log.write(data);
-        });
-        ant.stderr.on('data', function(data) {
-            grunt.log.error(data);
-        });
+		// Patch by Nicholas Kircher (https://github.com/MiracleBlue)
+		// Using grunt.util.spawn can't find ANT on OS X 10.9 for some reason
+		// Replaced with node's standard child_process
+		var args =  [
+			'-buildfile',
+				localTmp + '/ant/build.xml',
+			'-lib',
+			localLib,
+				'-Dbasedir='     + process.cwd()
+		];
+		args.push(task);
+		grunt.log.debug('ANT CMD: ant ' + args.join(' '));
+		grunt.log.writeln('Starting ANT ' + task + '...');
+
+		var cp = exec('ant ' + args.join(" "), function (err, stdout, stderr) {
+			console.log("halp", stdout, err);
+			done(err, stdout);
+		});
+		// End patch
     }
 
     /**

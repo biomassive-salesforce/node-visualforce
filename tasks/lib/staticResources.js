@@ -28,6 +28,12 @@ exports.buildStaticResources = function(options, done) {
 		var files = [];
 
 		staticResources.some(function(staticResource){
+			// Patch by Nicholas Kircher (https://github.com/MiracleBlue)
+			// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
+			// todo: Make this more ambiguous so that any other potential weird files are also caught
+			if (staticResource === ".DS_Store") return;
+			// End patch
+
 			var stat = fs.statSync('./' + inputPath + staticResourceFolder + staticResource + '/');
 			if(stat.isDirectory()){
 				files = fs.readdirSync('./' + inputPath + staticResourceFolder + staticResource + '/');
