@@ -26,8 +26,7 @@ var configuration = require('../tasks/lib/configuration').getConfiguration();
 //Default Configuration 
 var options = {
   inputPath: configuration.path.inputPath,
-  outputPath: configuration.path.outputPath,
-  staticResourceName: configuration.fileNames.staticResourceName
+  outputPath: configuration.path.outputPath
 };
 
 /**
@@ -42,8 +41,8 @@ function prepare_test(htmlFiles){
   });    
 
   //Copy Static resources to input/staticresources
-  grunt.file.recurse('./test/testFiles/staticresources', function callback(abspath, rootdir, subdir, filename){
-    grunt.file.copy(abspath, './' + options.inputPath + 'staticresources/' + subdir + '/' + filename);
+  grunt.file.recurse('./test/testFiles/staticresources/test', function callback(abspath, rootdir, subdir, filename){
+    grunt.file.copy(abspath, './' + options.inputPath + 'staticresources/test/' + subdir + '/' + filename);
   });
 };
 
@@ -59,10 +58,10 @@ function clean_test(htmlFiles){
   });
 
   //Deletes static resources from input/staticresources
-  grunt.file.delete('./' + options.inputPath + 'staticresources/css');
-  grunt.file.delete('./' + options.inputPath + 'staticresources/img');
-  grunt.file.delete('./' + options.inputPath + 'staticresources/js');
-  grunt.file.delete('./' + options.inputPath + 'staticresources/fonts');
+  grunt.file.delete('./' + options.inputPath + 'staticresources/test/css');
+  grunt.file.delete('./' + options.inputPath + 'staticresources/test/img');
+  grunt.file.delete('./' + options.inputPath + 'staticresources/test/js');
+  grunt.file.delete('./' + options.inputPath + 'staticresources/test/fonts');
 
   //Removes outputh path with all the content (pages and pages-meta.xml from outputPath + 'pages')' and .resource and
   //.resource-meta.xml from outputPath + 'staticresources' 
@@ -140,8 +139,7 @@ function validate_page_meta_xml_creation_and_content(test, filename){
  * Executes 1 expected assertions 
  */
 function validate_static_resource_creation(test){
-  var staticResourceExists = grunt.file.exists('./' + options.outputPath + 'staticresources/' + 
-                             options.staticResourceName + '.resource'); 
+  var staticResourceExists = grunt.file.exists('./' + options.outputPath + 'staticresources/test.resource'); 
   test.ok(staticResourceExists, 'The .resource was not created on the output/staticresources folder');
 }
 
@@ -152,8 +150,7 @@ function validate_static_resource_creation(test){
  * Executes 7 expected assertions 
  */
 function validate_static_resource_meta_xml_creation_and_content(test){
-  var staticResourceMeta = grunt.file.read('./' + options.outputPath + 'staticresources/' + options.staticResourceName + 
-                           '.resource-meta.xml'); 
+  var staticResourceMeta = grunt.file.read('./' + options.outputPath + 'staticresources/test.resource-meta.xml'); 
   test.ok(staticResourceMeta, 'The .resource-meta.xml was not created on the output/staticresources folder');
 
   //Validates meta-xml content
