@@ -20,9 +20,10 @@ This sample project is created following the expected input structure:
   - /input
     - /pages               #with a todo.html page
     - /staticresources     #static resources folder
-      - /css			   #with a todo stylesheet page
-      - /js                #with a todos.js and external libraries
-      - /img   			
+      - todo               #static resources name
+        - /css			   #with a todo stylesheet page
+        - /js                #with a todos.js and external libraries
+        - /img   			
 
 After copy these files and structure to your project you are ready to build the project using the following command:
 

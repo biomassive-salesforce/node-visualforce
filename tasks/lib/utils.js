@@ -47,6 +47,7 @@ exports.regexReplace = function(src, tagConfig) {
   var defaultConfiguration = configuration.getConfiguration();
   var staticResourceFolder = defaultConfiguration["package"].outputPath;
 
+  //Removes localhost references
   var regex = new RegExp('(http(.*?)||\\.\\.)/' + staticResourceFolder, "ig");
   var cleanedHTMLString = String(src).replace(regex, '');
 

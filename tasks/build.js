@@ -17,8 +17,7 @@ module.exports = function(grunt) {
     var options = this.options({
       inputPath: configuration.path.inputPath,
       outputPath: configuration.path.outputPath,
-      staticResourceFolder: configuration.path.staticResourceFolder,
-      staticResourceName: configuration.fileNames.staticResourceName
+      staticResourceFolder: configuration.path.staticResourceFolder
     });
   
     if(utils.inputFolderStructureIsValid(options)){

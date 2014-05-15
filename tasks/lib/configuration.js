@@ -20,10 +20,6 @@ exports.getConfiguration = function(){
 			//pagesFolder: folder used on input path to store the html pages (this property shouldn't be changed)
 			"pagesFolder": "pages/"
 		},
-		"fileNames": {//application file name configuration
-			//staticResourceName: static resource file name (configurable)
-			"staticResourceName": "staticResources"
-		},
 		"page": { // visualforce pages meta xml build configuration
 			//metatype: page meta type
 			"metaType": "ApexPage",
@@ -62,10 +58,9 @@ exports.getConfiguration = function(){
  * @return {object} configuration replacement object
  */
 exports.getReplacementConfiguration = function(options){
-	var constants = require("./constants.js");
-	var defaultConfiguration = this.getConfiguration();
-	var flagsConfiguration = this.getPageFlagsConfiguration();
-	var staticResourceName = defaultConfiguration["fileNames"].staticResourceName;
+	var constants = require("./constants.js"),
+		defaultConfiguration = this.getConfiguration(),
+		flagsConfiguration = this.getPageFlagsConfiguration();
 
 	// generates all the flags for the apex:page tag and set tags by default
 	var $flags = "";
@@ -97,18 +92,18 @@ exports.getReplacementConfiguration = function(options){
 			},
 			"link": { //replace for link tags (stylesheets) with rel before href
 				"name": "<link>",
-				"regex": /<link(.*?)rel="stylesheet"?(.*?)href=("|')(.*?)("|')(.*?)>/ig,
-				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$4\")}'/>"
+				"regex": /<link(.*?)rel="stylesheet"?(.*?)href=("|')(.*?)\/(.*?)("|')(.*?)>/ig,
+				"replacement": "<apex:stylesheet value='{!URLFOR($Resource.$4, \"$5\")}'/>"
 			},
 			"link2": { //replace for link tags (stylesheets) with rel after href
 				"name": "<link2>",
-				"regex": /<link(.*?)href=("|')(.*?)("|')(.*?)rel="stylesheet"?(.*?)>/ig,
-				"replacement": "<apex:stylesheet value='{!URLFOR($Resource." + staticResourceName + ", \"$3\")}'/>"
+				"regex": /<link(.*?)href=("|')(.*?)\/(.*?)("|')(.*?)rel="stylesheet"?(.*?)>/ig,
+				"replacement": "<apex:stylesheet value='{!URLFOR($Resource.$3, \"$4\")}'/>"
 			},
 			"script": { //replace for script tags
 				"name": "<script>",
-				"regex": /<script(.*?)src=["|'](.*?)["|'](.*?)><\/script>/ig,
-				"replacement": "<apex:includeScript value='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'/>"
+				"regex": /<script(.*?)src=["|'](.*?)\/(.*?)["|'](.*?)><\/script>/ig,
+				"replacement": "<apex:includeScript value='{!URLFOR($Resource.$2, \"$3\")}'/>"
 			},
 			"imgClass": { //replace for img class
 				"name": "<img>",
@@ -117,8 +112,8 @@ exports.getReplacementConfiguration = function(options){
 			},
 			"img": { //replace for img tags
 				"name": "<img>",
-				"regex": /<img(.*?)src=["|'](.*?)["|'](.*?)\/>/ig,
-				"replacement": "<img$1src='{!URLFOR($Resource." + staticResourceName + ", \"$2\")}'$3/>"
+				"regex": /<img(.*?)src=["|'](.*?)\/(.*?)["|'](.*?)\/>/ig,
+				"replacement": "<img$1src='{!URLFOR($Resource.$2, \"$3\")}'$4/>"
 			}
 		}
 	};

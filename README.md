@@ -10,12 +10,12 @@ This Grunt plugin works using the migration tool API to connect to a Sa
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-node-visualforce --save-dev
+npm install node-visualforce --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 ```js
-  grunt.loadNpmTasks('grunt-node-salesforce');
+  grunt.loadNpmTasks('node-visualforce');
 ```
 If you want to create a 'Build' and 'Deploy' grunt task you can add the following to Gruntfile
 ```js
@@ -26,10 +26,11 @@ Once you added the task to your Gruntfile, you have to put all your project file
   - /input
     - /pages               #put all your .html files here
     - /staticresources     #static resources folder put your resources files here.
-      - /css
-      - /js
-      - /img
-      - /fonts
+      - /<static resource name> # you can have more than one static resource, it will be indentified by the folder name
+        - /css
+        - /js
+        - /img
+        - /fonts
 ```
 Internally you need to reference the static resources (css, js, img, fonts) using absolute or relative ('/') paths
 
@@ -43,7 +44,6 @@ grunt.initConfig({
     options: {
       inputPath:'input/',
       outputPath:'output/',
-      staticResourceName:'staticResources',
       apexPageFlags: {"flagName1": value1, "flagName2": value2}
     }
   },
@@ -77,7 +77,7 @@ Running the command 'grunt build' creates the following /output folder structure
 ```
 It generates the visualforce page files (and the corresponding metadata files) from the html files located on the /input/pages folder and put them on /output/pages.
 
-It creates a static resource package (and the corresponding metadata file) from all the files located on the /staticresources subfolders and put it on /output/staticresources.
+It creates one static resource package (and the corresponding metadata file) for each of the static resource folders included in input/staticresources containing all the files located on the /staticresources/<static resource name> subfolders and put it on /output/staticresources.
 
 ### Build-Task options
 
@@ -90,11 +90,6 @@ This option sets the source folder where there´re the files to process
 Type: `String`
 Default value: `output/`
 output folder where the plugin create the *.page files and the static resource file to be deployed on
-
-####options.staticResourceName
-Type: `String`
-Default value: `staticResources`
-static resource file name
 
 ###Optional
 
