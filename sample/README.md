@@ -1,7 +1,12 @@
+Node Visualforce Sample
+=======================
+----
+
 Once the plugin has been installed and the Org information is configured on Gruntfile.js file according the following options:
 
+```
 deploy: {
-	...
+  ...
     your_target: {
       options:{
         user:'myusername@test.com',
@@ -12,6 +17,9 @@ deploy: {
       },
       ...
     }
+```
+
+<b>Note:</b> you can find a gruntfile model in the sample folder
 
 You are able to copy this sample project (a simple To Do list) to your project's root folder to validate that the plugin is correctly installed and configured (Note: You need to copy/replace the root's input folder with the sample's input folder).
 
@@ -21,9 +29,9 @@ This sample project is created following the expected input structure:
     - /pages               #with a todo.html page
     - /staticresources     #static resources folder
       - todo               #static resources name
-        - /css			   #with a todo stylesheet page
+        - /css         #with a todo stylesheet page
         - /js                #with a todos.js and external libraries
-        - /img   			
+        - /img        
 
 After copy these files and structure to your project you are ready to build the project using the following command:
 
@@ -43,6 +51,7 @@ Running the command
 
 Note: If you are under a proxy you will need to add the proxy host and port to the deploy config module so the ant server can reach the org for deployment:
 
+```
 grunt.initConfig({
   deploy: {
     your_target: {
@@ -55,3 +64,4 @@ grunt.initConfig({
     }
   }
 })
+```

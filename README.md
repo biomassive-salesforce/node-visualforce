@@ -7,7 +7,11 @@ This Grunt plugin works using the migration tool API to connect to a Sa
 
 ###Getting Started
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. 
+
+Note: In the sample folder you will find a grunfile.js model to use in your project.
+
+Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm install node-visualforce --save-dev
