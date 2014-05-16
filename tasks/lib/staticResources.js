@@ -64,7 +64,7 @@ exports.buildStaticResources = function(options, done) {
 				// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
 				// todo: Make this more ambiguous so that any other potential weird files are also caught
 				if (staticResource === ".DS_Store"){
-					numberOfFolders--;
+					numberOfStaticResources--;
 					return;
 				}
 				// End patch
