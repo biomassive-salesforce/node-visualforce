@@ -105,6 +105,11 @@ exports.getReplacementConfiguration = function(options){
 				"regex": /<script(.*?)src=["|'](.*?)\/(.*?)["|'](.*?)><\/script>/ig,
 				"replacement": "<apex:includeScript value='{!URLFOR($Resource.$2, \"$3\")}'/>"
 			},
+			"imgClosingTags": { //fix img tags without closing tags
+				"name": "<imgCloseTag>",
+				"regex": /<img(.*?)[^\/]>/ig,
+				"replacement": "<img$1\"/>"
+			},
 			"imgClass": { //replace for img class
 				"name": "<img>",
 				"regex": /<img(.*?)class=["|'](.*?)["|'](.*?)\/>/ig,
@@ -114,6 +119,17 @@ exports.getReplacementConfiguration = function(options){
 				"name": "<img>",
 				"regex": /<img(.*?)src=["|'](.*?)\/(.*?)["|'](.*?)\/>/ig,
 				"replacement": "<img$1src='{!URLFOR($Resource.$2, \"$3\")}'$4/>"
+			},
+			//fix unclosed meta tags first removing them and then adding the </meta> tag to the end
+			"meta": {				
+				"name": "<meta>",
+				"regex": /<meta(.*?)><\/meta>/ig,
+				"replacement": "<meta$1>"
+			},
+			"meta2": {
+				"name": "</meta>",
+				"regex": /<meta(.*?)>/ig,
+				"replacement": "<meta$1></meta>"
 			}
 		}
 	};

@@ -50,7 +50,7 @@ exports.buildStaticResources = function(options, done) {
 		
 		//Number of folders in staticResources Path
 		numberOfStaticResources = staticResources.length;
-		
+
 		//For each folder in 'inputPath' validates that contains files (not only directories) and creates a 
 		//staticResource file and meta.xml file 
 		staticResources.forEach(function(staticResourceName){			
@@ -95,6 +95,8 @@ exports.buildStaticResources = function(options, done) {
 				numberOfStaticResources--;
 				console.log(String(inputPath + staticResourceName + ' folder is empty, the static resource build for this folder will be skipped').cyan);
 			}
+
+			hasContent = false;
 		});
 	}else{
 		console.log(String('Your ' + inputPath + staticResourceFolder + ' folder was not created, the static resource build will be skipped').cyan);
