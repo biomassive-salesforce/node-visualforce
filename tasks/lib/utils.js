@@ -102,3 +102,16 @@ exports.createInputStructure = function(options){
 exports.isUnixHiddenPath = function (argument) {
   return (/(^|.\/)\.+[^\/\.]/g).test(argument);
 }
+
+/**
+ * Clears the specified output folder structure.
+ * @param  {Array} options
+ * @return {void}
+ */
+exports.clearOutputFolder = function (options) {
+    console.log('clearing output');
+    if(grunt.file.exists(options.outputPath)) {
+        grunt.file.delete(options.outputPath, { force: true });
+        console.log('output cleared');
+    }
+}

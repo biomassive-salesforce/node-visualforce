@@ -11,7 +11,7 @@ var utils = require('./lib/utils.js');
  * @return {void}       
  */
 module.exports = function(grunt) {
-    grunt.registerTask('build', function(){
+  grunt.registerTask('build', function(){
 
     //set default configurations
     var options = this.options({
@@ -19,11 +19,13 @@ module.exports = function(grunt) {
       outputPath: configuration.path.outputPath,
       staticResourceFolder: configuration.path.staticResourceFolder
     });
-  
-    if(utils.inputFolderStructureIsValid(options)){
+
+    if (utils.inputFolderStructureIsValid(options)) {
+      //clears the output structure before build
+      utils.clearOutputFolder(options);
       staticResources.buildStaticResources(options, this.async());
       page.buildPages(options);
-    }else{
+    } else {
       //Creates input structure
       utils.createInputStructure(options);
 
