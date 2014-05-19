@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
     if (utils.inputFolderStructureIsValid(options)) {
       //clears the output structure before build
-      utils.clearOutputFolder(options);
+      utils.clearSpecifiedFolder(options.outputPath);
       staticResources.buildStaticResources(options, this.async());
       page.buildPages(options);
     } else {

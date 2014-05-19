@@ -7,6 +7,7 @@ var localTmp = path.resolve(__dirname, '../tmp');
 var localAnt = path.resolve(__dirname, '../ant');
 var localLib = path.resolve(__dirname, '../deps');
 var exec = require('child_process').exec;
+var utils = require('./lib/utils.js');
 
 /**
  * function that seeks for the metadata
@@ -45,23 +46,13 @@ function lookupMetadata(key) {
  * @return {void}
  */
 module.exports = function(grunt){
-    
-    /**
-     * function that clears the deployment folder structure.
-     * @return {void}
-     */
-    function clearLocalTmp() {
-        if(grunt.file.exists(localTmp)) {
-            grunt.file.delete(localTmp, { force: true });
-        }
-    }
 
     /**
      * function that creates the directories for deployment
      * @return {void} 
      */
     function makeLocalTmp() {
-        clearLocalTmp();
+        utils.clearSpecifiedFolder(localTmp);
         grunt.file.mkdir(localTmp);
         grunt.file.mkdir(localTmp + '/ant');
     }
@@ -194,7 +185,7 @@ module.exports = function(grunt){
         grunt.file.write(options.root + '/package.xml', packageXml);
 
         runAnt('deploy', target, function(err, result) {
-            clearLocalTmp();
+            utils.clearSpecifiedFolder(localTmp);
             done();
         });
 
@@ -241,7 +232,7 @@ module.exports = function(grunt){
     grunt.file.write(options.root + '/destructiveChanges.xml', destructiveXml);
 
     runAnt('deploy', target, function(err, result) {
-      clearLocalTmp();
+      utils.clearSpecifiedFolder(localTmp);
       done();
     });
 

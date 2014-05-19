@@ -104,14 +104,12 @@ exports.isUnixHiddenPath = function (argument) {
 }
 
 /**
- * Clears the specified output folder structure.
- * @param  {Array} options
+ * Clears the specified folder structure.
+ * @param  {String} path
  * @return {void}
  */
-exports.clearOutputFolder = function (options) {
-    console.log('clearing output');
-    if(grunt.file.exists(options.outputPath)) {
-        grunt.file.delete(options.outputPath, { force: true });
-        console.log('output cleared');
+exports.clearSpecifiedFolder = function (path) {
+    if(grunt.file.exists(path)) {
+        grunt.file.delete(path, { force: true });
     }
 }
