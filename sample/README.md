@@ -33,6 +33,12 @@ This sample project is created following the expected input structure:
         - /js                #with a todos.js and external libraries
         - /img        
 
+Internally the reference to the static resources (css, js, img, fonts) use relative ('/') paths, for example:
+- <b>StyleSheets:</b> "../staticresources/todo/css/sample.css"
+- <b>JavaScripts:</b> "../staticresources/todo/js/vendors/jquery.js"
+- <b>Images:</b> "../staticresources/todo/img/bg.png"
+- <b>Fonts:</b>  "../fonts/Roboto/Roboto-Regular.ttf"
+
 After copy these files and structure to your project you are ready to build the project using the following command:
 
 - 'grunt build', which creates the following /output folder structure
