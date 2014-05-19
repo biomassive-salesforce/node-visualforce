@@ -36,7 +36,11 @@ Once you added the task to your Gruntfile, you have to put all your project file
         - /img
         - /fonts
 ```
-Internally you need to reference the static resources (css, js, img, fonts) using absolute or relative ('/') paths
+Internally you need to reference the static resources (css, js, img, fonts) using relative ('/') paths, for example:
+- <b>StyleSheets:</b> "../staticresources/<b>'static resources name'</b>/css/sample.css"
+- <b>JavaScripts:</b> "../staticresources/<b>'static resources name'</b>/js/vendors/jquery.js"
+- <b>Images:</b> "../staticresources/<b>'static resources name'</b>/img/sample.png"
+- <b>Fonts:</b>  "../fonts/Roboto/Roboto-Regular.ttf" (in sample.css)
 
 ###Configuring the plugin
 
