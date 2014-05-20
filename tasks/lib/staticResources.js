@@ -17,9 +17,11 @@ var grunt = require("grunt"),
 function zipperComplete(){
 	//Increase the counter of file compressed
 	zippedFiles++;
-
-	if(zippedFiles === numberOfStaticResources){		
-		done();	
+    console.log('zipped files: ' + zippedFiles);
+    console.log('numberOfStaticResources: ' + numberOfStaticResources);
+	if(zippedFiles === numberOfStaticResources){
+		console.log('done');
+		//done();	
 	}	
 }
 
@@ -34,8 +36,9 @@ exports.buildStaticResources = function(options, done) {
 	var staticResourceFolder = options.staticResourceFolder,
 		inputPath = options.inputPath + staticResourceFolder, 
 		outputPath = options.outputPath,
-		done = done,
 		staticResourceName;
+	done = done;
+		
 
 	//Validates if the static resource folder has content to build the .resource and .resource-meta.xml files
 	var hasContent = false;
@@ -50,10 +53,12 @@ exports.buildStaticResources = function(options, done) {
 		
 		//Number of folders in staticResources Path
 		numberOfStaticResources = staticResources.length;
+		console.log(numberOfStaticResources);
 
 		//For each folder in 'inputPath' validates that contains files (not only directories) and creates a 
 		//staticResource file and meta.xml file 
-		staticResources.forEach(function(staticResourceName){		
+		staticResources.forEach(function(staticResourceName){
+		console.log('Resource name:' + staticResourceName);		
 			if(staticResourceName !== ".DS_Store"){
 				path = './' + inputPath + staticResourceName + '/';
 
@@ -61,11 +66,11 @@ exports.buildStaticResources = function(options, done) {
 				resources = fs.readdirSync(path);
 				
 				resources.some(function(staticResource){
+					console.log("Resource: " + staticResource);
 					// Patch by Nicholas Kircher (https://github.com/MiracleBlue)
 					// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
 					// todo: Make this more ambiguous so that any other potential weird files are also caught
 					if (staticResource === ".DS_Store"){
-						numberOfStaticResources--;
 						return;
 					}
 					// End patch
@@ -76,6 +81,8 @@ exports.buildStaticResources = function(options, done) {
 						files = fs.readdirSync(path + staticResource + '/');
 						if(files && files.length > 0){
 							hasContent = true;
+						} else {
+							hasContent =false;
 						}
 					}else{
 						hasContent = true;
@@ -83,7 +90,14 @@ exports.buildStaticResources = function(options, done) {
 
 					return hasContent;		
 				})
+			} else {
+				numberOfStaticResources--
+				console.log('number of resources after else:'+numberOfStaticResources);
 			}
+
+			console.log();
+
+			console.log('hasContent'+ hasContent);
 
 			//Creates a zip only if the folder 'staticResourceName' contains files
 			if(hasContent){
