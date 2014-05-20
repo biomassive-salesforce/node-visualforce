@@ -19,7 +19,7 @@ function zipperComplete(){
 	zippedFiles++;
 
 	if(zippedFiles === numberOfStaticResources){		
-		done;	
+		done();	
 	}	
 }
 
@@ -53,35 +53,37 @@ exports.buildStaticResources = function(options, done) {
 
 		//For each folder in 'inputPath' validates that contains files (not only directories) and creates a 
 		//staticResource file and meta.xml file 
-		staticResources.forEach(function(staticResourceName){			
-			path = './' + inputPath + staticResourceName + '/';
+		staticResources.forEach(function(staticResourceName){		
+			if(staticResourceName !== ".DS_Store"){
+				path = './' + inputPath + staticResourceName + '/';
 
-			//Retrieves all the files/directories contained on 'staticResourceName' folder
-			resources = fs.readdirSync(path);
-			
-			resources.some(function(staticResource){
-				// Patch by Nicholas Kircher (https://github.com/MiracleBlue)
-				// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
-				// todo: Make this more ambiguous so that any other potential weird files are also caught
-				if (staticResource === ".DS_Store"){
-					numberOfStaticResources--;
-					return;
-				}
-				// End patch
+				//Retrieves all the files/directories contained on 'staticResourceName' folder
+				resources = fs.readdirSync(path);
 				
-				var stat = fs.statSync(path + staticResource + '/');
-				
-				if(stat.isDirectory()){
-					files = fs.readdirSync(path + staticResource + '/');
-					if(files && files.length > 0){
+				resources.some(function(staticResource){
+					// Patch by Nicholas Kircher (https://github.com/MiracleBlue)
+					// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
+					// todo: Make this more ambiguous so that any other potential weird files are also caught
+					if (staticResource === ".DS_Store"){
+						numberOfStaticResources--;
+						return;
+					}
+					// End patch
+					
+					var stat = fs.statSync(path + staticResource + '/');
+					
+					if(stat.isDirectory()){
+						files = fs.readdirSync(path + staticResource + '/');
+						if(files && files.length > 0){
+							hasContent = true;
+						}
+					}else{
 						hasContent = true;
 					}
-				}else{
-					hasContent = true;
-				}
 
-				return hasContent;		
-			})
+					return hasContent;		
+				})
+			}
 
 			//Creates a zip only if the folder 'staticResourceName' contains files
 			if(hasContent){
@@ -92,8 +94,7 @@ exports.buildStaticResources = function(options, done) {
 				//Write Static Resource -meta.xml
 				utils.buildXMLMeta(constants.XML_META_STATIC_RESOURCE, staticResourceName, constants.STATIC_RESOURCE_EXTENSION, outputPath);
 			}else{
-				numberOfStaticResources--;
-				console.log(String(inputPath + staticResourceName + ' folder is empty, the static resource build for this folder will be skipped').cyan);
+				numberOfStaticResources--;				
 			}
 
 			hasContent = false;
