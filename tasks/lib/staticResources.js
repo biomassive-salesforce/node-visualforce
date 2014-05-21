@@ -17,8 +17,7 @@ var grunt = require("grunt"),
 function zipperComplete(){
 	//Increase the counter of file compressed
 	zippedFiles++;
-
-	if(zippedFiles === numberOfStaticResources){		
+	if(zippedFiles === numberOfStaticResources){
 		done();	
 	}	
 }
@@ -29,13 +28,14 @@ function zipperComplete(){
  * @param {function} done  async flag
  * @return {void}
  */
-exports.buildStaticResources = function(options, done) {	
+exports.buildStaticResources = function(options, callback) {	
 	//Get Static Resource information from configuration object
 	var staticResourceFolder = options.staticResourceFolder,
 		inputPath = options.inputPath + staticResourceFolder, 
 		outputPath = options.outputPath,
-		done = done,
 		staticResourceName;
+	done = callback;
+		
 
 	//Validates if the static resource folder has content to build the .resource and .resource-meta.xml files
 	var hasContent = false;
@@ -65,7 +65,6 @@ exports.buildStaticResources = function(options, done) {
 					// Prevents code breaking on .DS_Store file (thinks its a directory when it isn't)
 					// todo: Make this more ambiguous so that any other potential weird files are also caught
 					if (staticResource === ".DS_Store"){
-						numberOfStaticResources--;
 						return;
 					}
 					// End patch
@@ -76,7 +75,7 @@ exports.buildStaticResources = function(options, done) {
 						files = fs.readdirSync(path + staticResource + '/');
 						if(files && files.length > 0){
 							hasContent = true;
-						}
+						} 
 					}else{
 						hasContent = true;
 					}
