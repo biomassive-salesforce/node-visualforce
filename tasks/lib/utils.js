@@ -113,3 +113,19 @@ exports.clearSpecifiedFolder = function (path) {
         grunt.file.delete(path, { force: true });
     }
 }
+
+/**
+ * Get ServerUrl from the configuration (Gruntfile) if was defined
+ * or use the default value from configuration.js
+ * @param  {Object} options [Options object]
+ * @return {String}         [Returns the configured serverUrl in Gruntfile.js if it was definedd
+ * or the efault serverUrl defined in configuration.js ]
+ */
+exports.getServerUrl = function(options){
+  var serverUrl = configuration.getConfiguration().serverUrl;
+  if(options().serverUrl !== undefined){
+    serverUrl = options().serverUrl;
+  }
+
+  return serverUrl;
+}

@@ -47,7 +47,8 @@ exports.getConfiguration = function(){
 				//description: static resource description 
 				"description": "Project Static Resources"
 			}
-		}
+		},
+		"serverUrl": "https://login.salesforce.com/"
 	};
 	return defaultSettings;
 };

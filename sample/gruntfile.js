@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
   //Set Project configuration.
   grunt.initConfig({
-    deploy: {
+    'nv-deploy': {
         dev1: {
             options: {
                 user: 'myusername@test.com',
@@ -16,6 +16,18 @@ module.exports = function(grunt) {
                 apexpage: ['*']
             }
         }
+    },
+    'nv-retrieve': {      
+      dev1: {
+        options: {
+          user: 'myusername@test.com',
+          pass: 'mypassword',
+          token: 'mytoken'
+        },
+        pkg: {
+          staticresource: ['*']
+        }
+      }
     }
   });
  

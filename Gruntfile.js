@@ -28,24 +28,45 @@ module.exports = function(grunt) {
     nodeunit: {
       all: ['test/**/*_test.js']
     },
-    deploy: {
+    'nv-deploy': {
+      dev1: {
         options: {
-            proxyConfig: {
-              proxyHost: 'proxy.corp.globant.com',
-              proxyPort: '3128'
-            }
+          user: 'myusername@test.com',
+          pass: 'mypassword',
+          token: 'mytoken'
         },
-        dev1: {
-            options: {
-                user:  'federico@sfadm.test',
-                pass:  'force36206a',
-                token: 'aHJVm2eWU4Ibhl8ndwkkd2wtN'
-            },
-            pkg: {
-                staticresource: ['*'],
-                apexpage: ['*']
-            }
+        pkg: {
+          staticresource: ['*'],
+          apexpage: ['*']
         }
+      }
+    },
+    'nv-retrieve': {      
+      dev1: {
+        options: {
+          user: 'myusername@test.com',
+          pass: 'mypassword',
+          token: 'mytoken'
+        },
+        /* Target-specific file lists to retrieve. */
+        pkg: {
+          staticresource: ['*']
+        }
+      }
+    },
+    'nv-undeploy': {
+      your_target: {
+        options:{
+          user: 'myusername@test.com',
+          pass: 'mypassword',
+          token: 'mytoken'
+        },
+        /* Target-specific file lists to undeploy. */
+        pkg: {   
+          apexpage: ['*'],
+          staticresources: ['*']
+        }
+      }
     }
   });
  
@@ -56,6 +77,7 @@ module.exports = function(grunt) {
 
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
+  
   // By default, lint and run all tests.
   grunt.registerTask('default', ['watch']);
 
